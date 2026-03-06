@@ -18,6 +18,8 @@ import {
   Book,
   Palette,
   CornerDownLeft,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 
 const TABS = [
@@ -481,6 +483,7 @@ export default function App() {
   const [showAdminPassword, setShowAdminPassword] = useState(false);
   const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
   const [draftBlock, setDraftBlock] = useState<BlockDraft>(createEmptyDraft());
+  const [showStickers, setShowStickers] = useState(true);
   const containerRef = useRef(null);
   const constraintsRef = useRef(null);
 
@@ -793,101 +796,105 @@ export default function App() {
         }}
       ></div>
 
-      <SocialSticker
-        path={SOCIAL_PATHS.github}
-        color="#181717"
-        rotate={12}
-        className="top-6 left-[20%] hidden md:block"
-        constraintsRef={constraintsRef}
-        href={CONTACT_LINKS.github}
-        label="GitHub"
-      />
-      <SocialSticker
-        path={SOCIAL_PATHS.x}
-        color="#000000"
-        rotate={-8}
-        className="top-5 left-[6%] hidden md:block"
-        constraintsRef={constraintsRef}
-        href={CONTACT_LINKS.x}
-        label="X"
-      />
-      <SocialSticker
-        path={SOCIAL_PATHS.instagram}
-        color="#E4405F"
-        rotate={15}
-        className="top-6 right-[28%] hidden md:block"
-        constraintsRef={constraintsRef}
-        href={CONTACT_LINKS.instagram}
-        label="Instagram"
-      />
-      <SocialSticker
-        path={SOCIAL_PATHS.linkedin}
-        color="#0A66C2"
-        rotate={-15}
-        className="top-36 right-[6%] hidden md:block"
-        constraintsRef={constraintsRef}
-        href={CONTACT_LINKS.linkedin}
-        label="LinkedIn"
-      />
-      <ImageIconSticker
-        src="/ucl.png"
-        size={128}
-        rotate={-10}
-        className="top-[10.5rem] left-[26%] hidden md:block"
-        constraintsRef={constraintsRef}
-      />
-      <ImageIconSticker
-        src="/uottawa.png"
-        rotate={8}
-        className="top-[10.5rem] right-[26%] hidden md:block"
-        filterId="sticker-outline-wide"
-        constraintsRef={constraintsRef}
-      />
-      <ImageIconSticker
-        src="/upei.png"
-        size={96}
-        rotate={-6}
-        className="top-[15rem] right-[18%] hidden md:block"
-        constraintsRef={constraintsRef}
-      />
-      <ImageIconSticker
-        src="/guitar_transparent.png"
-        rotate={9}
-        className="top-24 left-[9%] hidden md:block"
-        constraintsRef={constraintsRef}
-      />
-      <ShinChanSticker
-        className="top-32 right-[16%]"
-        constraintsRef={constraintsRef}
-      />
-      <Sticker
-        rotate={-9}
-        className="top-20 left-2 sm:left-8 pointer-events-auto"
-        constraintsRef={constraintsRef}
-      >
-        <svg
-          width="220"
-          height="72"
-          viewBox="0 0 220 72"
-          overflow="visible"
-          filter="url(#sticker-outline)"
-        >
-          <text
-            x="14"
-            y="50"
-            fill="#111827"
-            fontSize="38"
-            letterSpacing="0.8"
-            style={{
-              fontFamily: '"Space Grotesk", "Inter", sans-serif',
-              fontWeight: 600,
-              fontStyle: "italic",
-            }}
+      {showStickers && (
+        <>
+          <SocialSticker
+            path={SOCIAL_PATHS.github}
+            color="#181717"
+            rotate={12}
+            className="top-6 left-[20%] hidden md:block"
+            constraintsRef={constraintsRef}
+            href={CONTACT_LINKS.github}
+            label="GitHub"
+          />
+          <SocialSticker
+            path={SOCIAL_PATHS.x}
+            color="#000000"
+            rotate={-8}
+            className="top-5 left-[6%] hidden md:block"
+            constraintsRef={constraintsRef}
+            href={CONTACT_LINKS.x}
+            label="X"
+          />
+          <SocialSticker
+            path={SOCIAL_PATHS.instagram}
+            color="#E4405F"
+            rotate={15}
+            className="top-6 right-[28%] hidden md:block"
+            constraintsRef={constraintsRef}
+            href={CONTACT_LINKS.instagram}
+            label="Instagram"
+          />
+          <SocialSticker
+            path={SOCIAL_PATHS.linkedin}
+            color="#0A66C2"
+            rotate={-15}
+            className="top-36 right-[6%] hidden md:block"
+            constraintsRef={constraintsRef}
+            href={CONTACT_LINKS.linkedin}
+            label="LinkedIn"
+          />
+          <ImageIconSticker
+            src="/ucl.png"
+            size={128}
+            rotate={-10}
+            className="top-[10.5rem] left-[26%] hidden md:block"
+            constraintsRef={constraintsRef}
+          />
+          <ImageIconSticker
+            src="/uottawa.png"
+            rotate={8}
+            className="top-[10.5rem] right-[26%] hidden md:block"
+            filterId="sticker-outline-wide"
+            constraintsRef={constraintsRef}
+          />
+          <ImageIconSticker
+            src="/upei.png"
+            size={96}
+            rotate={-6}
+            className="top-[15rem] right-[18%] hidden md:block"
+            constraintsRef={constraintsRef}
+          />
+          <ImageIconSticker
+            src="/guitar_transparent.png"
+            rotate={9}
+            className="top-24 left-[9%] hidden md:block"
+            constraintsRef={constraintsRef}
+          />
+          <ShinChanSticker
+            className="top-32 right-[16%]"
+            constraintsRef={constraintsRef}
+          />
+          <Sticker
+            rotate={-9}
+            className="top-20 left-2 sm:left-8 pointer-events-auto"
+            constraintsRef={constraintsRef}
           >
-            Yifan Yang
-          </text>
-        </svg>
-      </Sticker>
+            <svg
+              width="220"
+              height="72"
+              viewBox="0 0 220 72"
+              overflow="visible"
+              filter="url(#sticker-outline)"
+            >
+              <text
+                x="14"
+                y="50"
+                fill="#111827"
+                fontSize="38"
+                letterSpacing="0.8"
+                style={{
+                  fontFamily: '"Space Grotesk", "Inter", sans-serif',
+                  fontWeight: 600,
+                  fontStyle: "italic",
+                }}
+              >
+                Yifan Yang
+              </text>
+            </svg>
+          </Sticker>
+        </>
+      )}
 
       {/* Typewriter/Printer Machine Body */}
       <div className="w-full max-w-4xl relative flex flex-col items-center">
@@ -904,28 +911,30 @@ export default function App() {
               <InteractiveBrandToggle mode={mode} onChange={handleModeChange} isPrinting={isPrinting} />
 
               {/* Center: Stickers */}
-              <div className="absolute inset-0 pointer-events-none hidden md:block z-50">
-                <Sticker rotate={-12} className="top-1 left-[32%] pointer-events-auto" constraintsRef={constraintsRef}>
-                  <div className="bg-blue-500 text-white px-4 py-2 rounded-xl shadow-sm border-[3px] border-white dark:border-[#1a1a1a] font-display font-bold flex items-center gap-2 text-sm">
-                    <Smile size={16} /> Hello!
-                  </div>
-                </Sticker>
-                <Sticker rotate={15} className="-top-1 left-[48%] pointer-events-auto" constraintsRef={constraintsRef}>
-                  <div className="bg-emerald-500 text-white px-4 py-2 rounded-xl shadow-sm border-[3px] border-white dark:border-[#1a1a1a] font-display font-bold flex items-center gap-2 text-sm">
-                    <Zap size={16} /> Fast
-                  </div>
-                </Sticker>
-                <Sticker rotate={-8} className="top-2 left-[64%] pointer-events-auto" constraintsRef={constraintsRef}>
-                  <div className="bg-amber-400 text-black px-4 py-2 rounded-xl shadow-sm border-[3px] border-white dark:border-[#1a1a1a] font-display font-bold flex items-center gap-2 text-sm">
-                    <Coffee size={16} /> Code
-                  </div>
-                </Sticker>
-                <Sticker rotate={10} className="-top-2 left-[80%] pointer-events-auto" constraintsRef={constraintsRef}>
-                  <div className="bg-purple-500 text-white px-4 py-2 rounded-xl shadow-sm border-[3px] border-white dark:border-[#1a1a1a] font-display font-bold flex items-center gap-2 text-sm">
-                    <Palette size={16} /> Design
-                  </div>
-                </Sticker>
-              </div>
+              {showStickers && (
+                <div className="absolute inset-0 pointer-events-none hidden md:block z-50">
+                  <Sticker rotate={-12} className="top-1 left-[32%] pointer-events-auto" constraintsRef={constraintsRef}>
+                    <div className="bg-blue-500 text-white px-4 py-2 rounded-xl shadow-sm border-[3px] border-white dark:border-[#1a1a1a] font-display font-bold flex items-center gap-2 text-sm">
+                      <Smile size={16} /> Hello!
+                    </div>
+                  </Sticker>
+                  <Sticker rotate={15} className="-top-1 left-[48%] pointer-events-auto" constraintsRef={constraintsRef}>
+                    <div className="bg-emerald-500 text-white px-4 py-2 rounded-xl shadow-sm border-[3px] border-white dark:border-[#1a1a1a] font-display font-bold flex items-center gap-2 text-sm">
+                      <Zap size={16} /> Fast
+                    </div>
+                  </Sticker>
+                  <Sticker rotate={-8} className="top-2 left-[64%] pointer-events-auto" constraintsRef={constraintsRef}>
+                    <div className="bg-amber-400 text-black px-4 py-2 rounded-xl shadow-sm border-[3px] border-white dark:border-[#1a1a1a] font-display font-bold flex items-center gap-2 text-sm">
+                      <Coffee size={16} /> Code
+                    </div>
+                  </Sticker>
+                  <Sticker rotate={10} className="-top-2 left-[80%] pointer-events-auto" constraintsRef={constraintsRef}>
+                    <div className="bg-purple-500 text-white px-4 py-2 rounded-xl shadow-sm border-[3px] border-white dark:border-[#1a1a1a] font-display font-bold flex items-center gap-2 text-sm">
+                      <Palette size={16} /> Design
+                    </div>
+                  </Sticker>
+                </div>
+              )}
 
               {/* Right: Theme Toggle */}
               <div className="flex items-center gap-2 sm:gap-3 justify-end shrink-0">
@@ -1080,6 +1089,28 @@ export default function App() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      <motion.button
+        onClick={() => setShowStickers((prev) => !prev)}
+        whileHover={{ scale: 1.03, y: -1 }}
+        whileTap={{ scale: 0.97 }}
+        aria-label={showStickers ? "Hide stickers" : "Show stickers"}
+        className="fixed bottom-24 right-5 z-[150] cursor-pointer select-none"
+      >
+        <span className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-xl bg-zinc-900/15 dark:bg-black/50" />
+        <span className="relative inline-flex items-center gap-2 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-gradient-to-b from-white to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 px-3 py-2 text-zinc-900 dark:text-zinc-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-900">
+            {showStickers ? (
+              <Eye size={15} strokeWidth={2.2} />
+            ) : (
+              <EyeOff size={15} strokeWidth={2.2} />
+            )}
+          </span>
+          <span className="text-xs font-semibold tracking-tight">
+            {showStickers ? "Hide Stickers" : "Show Stickers"}
+          </span>
+        </span>
+      </motion.button>
 
       <motion.button
         onClick={openBlockAdmin}
@@ -1379,14 +1410,15 @@ function HomeContent() {
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">
           Hi, I'm Yifan. <br />
           <span className="text-zinc-400 dark:text-zinc-500">
-            I build practical web and AI-assisted tools.
+            I build AI-native software and intelligent hardware systems.
           </span>
         </h2>
 
         <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xl">
-          Developer focused on product-minded engineering. I enjoy building
-          useful software, from polished UI projects to small tools that solve
-          specific real-world problems.
+          I design and ship end-to-end AI products across cloud apps, browser
+          tools, and edge devices. My work combines LLM workflows, multimodal
+          interfaces, and embedded interaction design to turn research ideas
+          into practical systems.
         </p>
       </div>
 
@@ -1394,7 +1426,7 @@ function HomeContent() {
         <div className="inline-flex items-center gap-3 bg-zinc-100 dark:bg-zinc-800/50 px-4 py-2 rounded-full border border-black/5 dark:border-white/5">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
           <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            Open to collaboration and new opportunities
+            Open to AI software and hardware collaboration
           </span>
         </div>
       </div>
