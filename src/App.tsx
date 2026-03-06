@@ -11,13 +11,11 @@ import {
   Smile,
   Zap,
   Coffee,
-  BookOpen,
   ArrowRight,
   ArrowLeft,
   Rocket,
   GraduationCap,
   Book,
-  RefreshCw,
   Palette,
 } from "lucide-react";
 
@@ -343,6 +341,34 @@ export default function App() {
         className="top-36 right-[6%] hidden md:block"
         constraintsRef={constraintsRef}
       />
+      <Sticker
+        rotate={-9}
+        className="top-20 left-2 sm:left-8 pointer-events-auto"
+        constraintsRef={constraintsRef}
+      >
+        <svg
+          width="220"
+          height="72"
+          viewBox="0 0 220 72"
+          overflow="visible"
+          filter="url(#sticker-outline)"
+        >
+          <text
+            x="14"
+            y="50"
+            fill="#111827"
+            fontSize="38"
+            letterSpacing="0.8"
+            style={{
+              fontFamily: '"Space Grotesk", "Inter", sans-serif',
+              fontWeight: 600,
+              fontStyle: "italic",
+            }}
+          >
+            Yifan Yang
+          </text>
+        </svg>
+      </Sticker>
 
       {/* Typewriter/Printer Machine Body */}
       <div className="w-full max-w-4xl relative flex flex-col items-center">
@@ -392,51 +418,53 @@ export default function App() {
             </div>
 
             {/* Bottom Row: Tabs */}
-            <div className="w-full overflow-x-auto scrollbar-hide -mx-4 px-4 lg:mx-0 lg:px-0 flex justify-center h-12">
-              <AnimatePresence mode="wait">
-                {mode === "portfolio" && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-center bg-white/60 dark:bg-[#1a1a1a]/60 backdrop-blur-md p-1.5 rounded-2xl shadow-sm border border-black/5 dark:border-white/10 w-max mx-auto"
-                  >
-                    {TABS.map((tab) => {
-                      const isActive = activeTab === tab.id;
-                      const Icon = tab.icon;
-                      return (
-                        <button
-                          key={tab.id}
-                          onClick={() => handleTabChange(tab.id)}
-                          disabled={isPrinting}
-                          className={`
+            <div className="w-full h-12 flex items-center justify-center">
+              <div className="max-w-full">
+                <AnimatePresence mode="wait">
+                  {mode === "portfolio" && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="mx-auto flex items-center bg-white/60 dark:bg-[#1a1a1a]/60 backdrop-blur-md p-1.5 rounded-2xl shadow-sm border border-black/5 dark:border-white/10 w-max"
+                    >
+                      {TABS.map((tab) => {
+                        const isActive = activeTab === tab.id;
+                        const Icon = tab.icon;
+                        return (
+                          <button
+                            key={tab.id}
+                            onClick={() => handleTabChange(tab.id)}
+                            disabled={isPrinting}
+                            className={`
                           relative flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 whitespace-nowrap
                           ${isActive ? "text-zinc-900 dark:text-white" : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"}
                           ${isPrinting ? "cursor-not-allowed opacity-70" : "cursor-pointer"}
                         `}
-                        >
-                          {isActive && (
-                            <motion.div
-                              layoutId="activeTab"
-                              className="absolute inset-0 bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-black/5 dark:border-white/5"
-                              transition={{
-                                type: "spring",
-                                stiffness: 300,
-                                damping: 30,
-                              }}
-                            />
-                          )}
-                          <span className="relative z-10 flex items-center gap-1.5">
-                            <Icon size={16} />
-                            <span className="hidden sm:block">{tab.label}</span>
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                          >
+                            {isActive && (
+                              <motion.div
+                                layoutId="activeTab"
+                                className="absolute inset-0 bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-black/5 dark:border-white/5"
+                                transition={{
+                                  type: "spring",
+                                  stiffness: 300,
+                                  damping: 30,
+                                }}
+                              />
+                            )}
+                            <span className="relative z-10 flex items-center gap-1.5">
+                              <Icon size={16} />
+                              <span className="hidden sm:block">{tab.label}</span>
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           </div>
         </div>
