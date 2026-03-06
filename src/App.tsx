@@ -76,38 +76,51 @@ const createEmptyDraft = (): BlockDraft => ({
   content: "",
 });
 
+const stripSlugPrefix = (content: string) =>
+  content.replace(/^Slug:\s*\/[^\n]+\n\n/i, "");
+
+const sortBlocksByDateDesc = (items: BlockItem[]) =>
+  [...items].sort((a, b) => b.date.localeCompare(a.date));
+
 const DEFAULT_BLOCKS: BlockItem[] = [
   {
-    id: "block-lumina",
-    title: "Building Lumina: AI-Powered Bookmark Search",
-    date: "2026-01-18",
+    id: "block-future-ai-surfaces",
+    title: "The Future of AI Is Not Bigger Models. It's Better Surfaces.",
+    date: "2025-12-02",
     excerpt:
-      "How I approached turning messy browser bookmarks into a searchable knowledge base with AI summaries and tags.",
-    tags: ["AI", "Product"],
+      "For the last two years, the AI conversation has been dominated by scale: larger models, more parameters, more compute, longer context windows. But the next wave of meaningful products may come from something less flashy and more important - better surfaces.",
+    tags: ["AI", "Product Design", "Interfaces"],
     content:
-      "Lumina came from a simple pain point: bookmarks grow quickly, but finding what matters later is hard. I wanted a workflow where saved pages become useful context instead of clutter.\n\nI focused on three capabilities: concise summaries, meaningful tags, and semantic search. The project pushed me to think beyond basic keyword matching and design for intent-based retrieval.\n\nThe biggest lesson was product framing: users care less about the model and more about getting a useful answer fast.",
+      "For the last two years, the AI conversation has been dominated by scale. Bigger models. Larger context windows. More benchmarks. More GPUs. More money.\n\nThat race matters. Better foundation models unlock new capabilities, and there is no denying how much progress has come from scaling. But I increasingly think that the next truly important layer of AI will not be defined by model size alone. It will be defined by surfaces.\n\nBy surfaces, I mean the places where intelligence actually meets life: the screen you glance at in the kitchen, the assistant embedded in your workflow, the tiny interface that helps you make a decision without forcing you to open five tabs and think like a systems engineer.\n\nMost AI products today still feel like destinations. You go to them, type into them, and leave. They are impressive, but they often remain separate from the environment where real decisions happen. The future feels different. AI becomes useful when it stops asking for attention and starts fitting naturally into moments that already exist.\n\nThat is why I am increasingly interested in small, ambient, and context-aware interfaces. Not everything needs to be a giant chatbot window. Sometimes the right AI product is a dashboard on a home server. Sometimes it is an e-paper display that quietly shows what matters. Sometimes it is a tool that notices patterns in your day and surfaces the right information before you ask.\n\nThis shift sounds subtle, but it changes product design completely.\n\nIf your main question is \"How smart is the model?\", you optimize for raw capability. If your question becomes \"Where should intelligence appear, and in what form?\", you start thinking about timing, trust, friction, and cognitive load.\n\nThat is a more human question.\n\nIn practice, many of the best AI experiences will not feel like \"using AI\" at all. They will feel like fewer clicks. Less context switching. Less forgetting. More continuity between intention and action.\n\nA lot of current AI products still make users do too much translation work. The user has to explain context, restate preferences, assemble files, describe goals, and decide what tool to use. In theory the AI is powerful. In practice the human is still acting as the operating system.\n\nGood surfaces reduce that burden.\n\nA good surface knows where it lives. It understands whether it is helping with work, home, creativity, communication, or health. It respects the user's attention. It does not show ten possibilities when one clear next step is enough. It does not force a dramatic conversation every time the user needs a small answer.\n\nThis also changes how I think about devices. AI does not belong only on premium laptops and cloud dashboards. It belongs on physical objects, in persistent spaces, and in systems that stay available in the background. The most interesting AI products of the next few years may not be the ones with the loudest demos. They may be the ones that become part of a person's environment and quietly earn trust over time.\n\nThat is especially true for personal AI.\n\nPersonal AI should not just be smart in a general way. It should be situated. It should know what kind of life it is supporting. A generic answer engine can be useful, but a meaningful assistant needs memory, rhythm, and context. It needs to understand whether the user is building, learning, resting, struggling, or deciding. It needs to show up differently in each case.\n\nThis is where hardware, interface design, and software orchestration start to matter as much as the model itself.\n\nThe next generation of AI products will not win simply by being the most intelligent in abstraction. They will win by being the most naturally placed. The best ones will appear where people already are, with the right level of visibility, the right amount of information, and the right relationship to the user's time.\n\nIn other words, intelligence is only half the product.\n\nThe other half is presence.\n\nAnd I suspect that presence - where AI lives, how it appears, and how gently it fits into real life - will matter more and more from here.",
   },
   {
-    id: "block-portfolio",
-    title: "Designing a Portfolio That Feels Like a Product",
-    date: "2025-12-04",
+    id: "block-agents-need-grounding",
+    title: "Agents Need Grounding, Not Just Autonomy",
+    date: "2025-08-12",
     excerpt:
-      "Notes on building this portfolio as a deliberate user experience, not just a static showcase page.",
-    tags: ["Frontend", "Design"],
+      "The dream of AI agents is compelling: systems that can plan, decide, and act on our behalf. But most agent products still fail for a simple reason. They are given too much freedom and not enough grounding.",
+    tags: ["AI", "Agents", "Systems"],
     content:
-      "I treated this portfolio like a product interface. The printer metaphor gave me a strong interaction model, but I still prioritized legibility and quick scanning for hiring contexts.\n\nMotion is used to guide attention during tab transitions and content reveals. I kept animation scoped so performance stays stable and interaction remains clear.\n\nThis process reinforced a recurring principle: memorable visual language works best when paired with predictable structure.",
+      "AI agents are one of the most exciting ideas in technology right now.\n\nThe pitch is simple and powerful: instead of asking AI for one answer at a time, we build systems that can plan over multiple steps, use tools, retrieve information, remember context, and complete meaningful tasks. In theory, this moves us from conversation to execution.\n\nBut in practice, many so-called agents still feel fragile.\n\nThey can be impressive in demos, especially when the path is short and the environment is controlled. Yet once they are placed in the real world - where information is incomplete, preferences change, tools break, and humans are inconsistent - their performance often drops fast.\n\nI don't think the main problem is that agents are not autonomous enough.\n\nI think the main problem is that they are not grounded enough.\n\nAutonomy is attractive because it feels like progress. We want agents that can think ahead, take initiative, and do more with less supervision. But autonomy without grounding creates systems that are active without being reliable. They move, but they do not always move in the right direction.\n\nGrounding is what makes an agent useful. It is the set of constraints, context, signals, and feedback loops that connect a model's reasoning to the user's actual world.\n\nThat grounding can take many forms.\n\nIt can mean tool access with clear permissions.\n\nIt can mean memory that is structured rather than vague.\n\nIt can mean observing real user behavior instead of relying only on one-off prompts.\n\nIt can mean knowing whether the user is at work, at home, tired, busy, healthy, overwhelmed, or offline.\n\nIt can mean integrating live context such as documents, schedules, system status, sensor data, or communication history.\n\nWithout grounding, an agent is forced to improvise too much.\n\nAnd improvisation is exactly where trust breaks.\n\nThis is why I am skeptical of agent systems that emphasize maximum freedom too early. If an agent can call ten tools but has no stable model of user priorities, it is not really intelligent in the way that matters. It is just highly capable at generating action. That is not the same thing as good judgment.\n\nGood judgment comes from context.\n\nIf we want agents to feel dependable, they need more than planning loops and function calls. They need a worldview shaped by the environment they operate in. They need to understand the difference between urgency and importance. They need to know when not to act. They need to know when uncertainty is too high. They need to be legible to the user, so their reasoning and decisions can be inspected when needed.\n\nThis matters even more in personal AI.\n\nA truly personal agent should not behave like an intern with unlimited enthusiasm and no situational awareness. It should behave more like a calm collaborator. It should know the user's preferences, tolerate ambiguity, and improve over time by learning from real feedback. It should not merely execute goals. It should interpret them in the context of a life.\n\nThat is why I think multimodal and context-rich systems will matter so much in the next phase of agent design. Text alone is often not enough. A user's schedule, health trends, habits, past decisions, and environmental state can all change what the \"right\" action is. An agent that ignores these signals may still sound intelligent, but it will make shallow decisions.\n\nThe deeper challenge is not just making agents do more.\n\nIt is making them care about the right things.\n\nThat requires architecture as much as intelligence. We need better memory systems, better permission layers, better state tracking, better handoffs between models and tools, and better ways to express uncertainty. We also need product design that makes the agent's scope clear. A trustworthy agent is not one that claims to do everything. It is one that consistently does the right subset of things well.\n\nIn the long run, I suspect the most successful agents will not be the most autonomous in the abstract. They will be the most grounded in reality.\n\nBecause action is cheap.\n\nAlignment is hard.\n\nAnd usefulness lives in the gap between the two.",
   },
   {
-    id: "block-side-project-strategy",
-    title: "Small Tools, Real Utility: Side Project Strategy",
-    date: "2025-11-09",
+    id: "block-openclaw-personal-software",
+    title: "OpenClaw and the Return of Personal Software",
+    date: "2026-02-11",
     excerpt:
-      "Why I keep building focused utility projects and what they taught me about engineering trade-offs.",
-    tags: ["Engineering", "Learning"],
+      "OpenClaw is interesting not just because it is another AI agent, but because it points toward something older and deeper: the return of personal software. In a world of rented interfaces and cloud dependence, that shift matters.",
+    tags: ["AI", "Personal Software", "Local-first"],
     content:
-      "Not every project has to be huge. Focused tools like calculators, quality-of-life fixes, or workflow helpers are great environments to practice clear problem framing and shipping discipline.\n\nThese projects force practical decisions: what to automate, what to postpone, and how to keep scope under control while still delivering value.\n\nOver time, small wins compound into stronger engineering judgment and better product intuition.",
+      "For a lot of people, OpenClaw looks like just another entry in the growing list of AI agents.\n\nThat is the obvious reading. It sends messages, uses tools, runs tasks, and plugs into the apps people already use. It sits close to the now-familiar dream of an assistant that does more than answer questions. It acts. It remembers. It stays around. Publicly, OpenClaw presents itself as \"the AI that actually does things,\" with a local-first, chat-based model that connects to everyday channels and layers in tools, skills, agents, and persistent context.\n\nBut I think that reading misses the more interesting point.\n\nWhat makes OpenClaw worth paying attention to is not that it is an AI agent. It is that it hints at the return of personal software.\n\nFor years, software has moved in one direction: away from ownership and toward access. We stopped buying tools and started renting platforms. We stopped shaping software around our own workflows and started adapting ourselves to SaaS products designed for the average customer. Cloud convenience won, but at the cost of intimacy. Most software today is polished, collaborative, and scalable. Very little of it feels truly personal.\n\nAI changes that equation.\n\nThe most interesting thing about personal AI is not that it can generate text. It is that it can restore software as something closer to a living system around an individual. Not just an app you open, but an environment that remembers, adapts, and accumulates context over time.\n\nThat is where OpenClaw feels like a signal.\n\nIts importance is not in any single feature. It is in the architecture of the idea: software that lives closer to the user, carries durable context, routes through channels the user already inhabits, and can expand its behavior through code and skills instead of waiting for a platform team to bless every new use case. The official project materials emphasize exactly this stack: local-first control, multi-channel inboxes, agent routing, tool surfaces, skills, and a coding-agent layer that can delegate real work to systems like Codex, Claude Code, or Pi.\n\nThat combination matters because it changes the center of gravity.\n\nA normal SaaS product asks: how do we get users into our interface?\n\nA personal AI system asks: how do we meet the user where they already are?\n\nThat is a much deeper shift than it sounds.\n\nIf AI only lives inside one branded chat box, it remains a destination. You visit it, ask for help, and leave. But if intelligence is routed through the channels you already check, tied to your files and habits, and able to take action with continuity, then it starts to look less like a chatbot and more like a layer of personal infrastructure.\n\nThat word matters: infrastructure.\n\nWe often describe AI in terms of intelligence, but usefulness is usually a systems problem. The hard part is not only making the model smart. The hard part is making the surrounding system persistent, grounded, and available at the right surface at the right moment. A personal AI becomes compelling when it is not merely powerful in abstraction, but situated in the user's actual life.\n\nThis is why I think the OpenClaw style of product is more important than many people realize.\n\nIt suggests that the future of AI may not belong only to giant centralized assistants with pristine interfaces and controlled capabilities. It may also belong to messy, extensible, user-shaped systems that behave more like software organisms: local when necessary, connected when useful, and open to being customized by the people who live with them.\n\nThat openness comes with obvious risks.\n\nThe more an agent can do, the more trust becomes the real product. Open ecosystems, skills, code execution, automation layers, and background tasks all create attack surfaces as well as creative possibilities. Even OpenClaw's own public messaging now highlights skill security partnerships, which tells you that the security layer is not a side issue but part of the core story.\n\nBut this does not weaken the thesis. It strengthens it.\n\nPersonal software has always been more powerful and more dangerous than generic software. A spreadsheet can run a business or ruin one. A shell script can automate a workflow or delete the wrong directory. What makes personal tools valuable is precisely that they can be shaped to the edge cases of a real life. AI agents inherit that same tension, except at a larger scale.\n\nSo the real question is not whether systems like OpenClaw are perfectly safe, polished, or complete yet.\n\nThe real question is whether they are pointing in the right direction.\n\nI think they are.\n\nBecause what people seem to want from AI is not endless conversation. They want leverage. They want continuity. They want software that feels like it belongs to them again. They want systems that understand their rhythms, use their preferred tools, and evolve with their projects instead of forcing every need through the same generic interface.\n\nIn that sense, OpenClaw is less interesting as a product category than as a philosophy.\n\nIt says that a useful AI assistant should not just be smart. It should be close. Close to the user's channels. Close to the user's data. Close to the user's habits. Close to the user's intent. And perhaps most importantly, close enough to be modified.\n\nThat last point may end up being the most important of all.\n\nThe history of computing is full of moments when powerful tools became transformative only after they became personal. Computers mattered more when they moved from institutions to desks. The web mattered more when publishing became accessible to individuals. Smartphones mattered more when software became ambient and always with us.\n\nAI may follow the same pattern.\n\nNot when it becomes bigger.\n\nNot when it becomes louder.\n\nBut when it becomes yours.\n\nAnd that is why I think OpenClaw is worth watching.\n\nNot because it proves the agent future is finished.\n\nBut because it suggests personal software may be starting again.",
   },
 ];
+
+const REQUIRED_DEFAULT_POSTS = DEFAULT_BLOCKS;
+const REMOVED_LEGACY_POST_IDS = new Set([
+  "block-lumina",
+  "block-portfolio",
+  "block-side-project-strategy",
+]);
 
 const Sticker = ({ children, rotate, className, constraintsRef }: any) => (
   <motion.div
@@ -473,7 +486,9 @@ export default function App() {
   const [isPrinting, setIsPrinting] = useState(false);
   const [themeMode, setThemeMode] = useState<ThemeMode>("auto");
   const [isDark, setIsDark] = useState<boolean>(getSystemPrefersDark);
-  const [blocks, setBlocks] = useState<BlockItem[]>(DEFAULT_BLOCKS);
+  const [blocks, setBlocks] = useState<BlockItem[]>(
+    sortBlocksByDateDesc(DEFAULT_BLOCKS)
+  );
   const [isBlockAdminOpen, setIsBlockAdminOpen] = useState(false);
   const [isBlockAdminAuthed, setIsBlockAdminAuthed] = useState(false);
   const [adminPasswordInput, setAdminPasswordInput] = useState("");
@@ -534,7 +549,27 @@ export default function App() {
       try {
         const parsed = JSON.parse(savedBlocks);
         if (Array.isArray(parsed)) {
-          setBlocks(parsed as BlockItem[]);
+          const parsedBlocks = (parsed as BlockItem[])
+            .map((item) => {
+              const requiredPost = REQUIRED_DEFAULT_POSTS.find(
+                (post) => post.id === item.id
+              );
+              if (!requiredPost) return item;
+              return {
+                ...item,
+                date: requiredPost.date,
+                content: stripSlugPrefix(item.content),
+              };
+            })
+            .filter((item) => !REMOVED_LEGACY_POST_IDS.has(item.id));
+          const mergedBlocks = [...parsedBlocks];
+          for (let i = REQUIRED_DEFAULT_POSTS.length - 1; i >= 0; i -= 1) {
+            const requiredPost = REQUIRED_DEFAULT_POSTS[i];
+            if (!mergedBlocks.some((item) => item.id === requiredPost.id)) {
+              mergedBlocks.unshift(requiredPost);
+            }
+          }
+          setBlocks(sortBlocksByDateDesc(mergedBlocks));
         }
       } catch {
         // Ignore malformed saved data and keep defaults.
@@ -618,31 +653,35 @@ export default function App() {
 
     if (editingBlockId) {
       setBlocks((prev) =>
-        prev.map((item) =>
-          item.id === editingBlockId
-            ? {
-                ...item,
-                title,
-                date: draftBlock.date,
-                excerpt: draftBlock.excerpt.trim(),
-                tags: parsedTags,
-                content,
-              }
-            : item
+        sortBlocksByDateDesc(
+          prev.map((item) =>
+            item.id === editingBlockId
+              ? {
+                  ...item,
+                  title,
+                  date: draftBlock.date,
+                  excerpt: draftBlock.excerpt.trim(),
+                  tags: parsedTags,
+                  content,
+                }
+              : item
+          )
         )
       );
     } else {
-      setBlocks((prev) => [
-        {
-          id: `block-${Date.now()}`,
-          title,
-          date: draftBlock.date,
-          excerpt: draftBlock.excerpt.trim(),
-          tags: parsedTags,
-          content,
-        },
-        ...prev,
-      ]);
+      setBlocks((prev) =>
+        sortBlocksByDateDesc([
+          {
+            id: `block-${Date.now()}`,
+            title,
+            date: draftBlock.date,
+            excerpt: draftBlock.excerpt.trim(),
+            tags: parsedTags,
+            content,
+          },
+          ...prev,
+        ])
+      );
     }
 
     setEditingBlockId(null);
@@ -1686,9 +1725,35 @@ function BlogContent({ posts }: { posts: BlockItem[] }) {
       </div>
 
       {posts.length === 0 && (
-        <div className="rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 px-4 py-6 text-sm text-zinc-500 dark:text-zinc-400">
-          暂无内容。请通过 <span className="font-semibold">Blocks Admin</span> 新增你的第一条 block。
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="relative overflow-hidden rounded-2xl border border-zinc-300/90 dark:border-zinc-700/90 bg-gradient-to-b from-white/80 to-zinc-50/80 dark:from-zinc-900/40 dark:to-zinc-900/20 px-5 py-6 sm:px-6 sm:py-7"
+        >
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-zinc-300/80 to-transparent dark:via-zinc-700/80" />
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(0,0,0,0.03),transparent_40%)] dark:bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.04),transparent_40%)]" />
+
+          <div className="relative z-10 flex items-center justify-between mb-4">
+            <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-400">
+              Blog Status
+            </span>
+            <span className="rounded-full border border-zinc-300 dark:border-zinc-700 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-300">
+              Empty
+            </span>
+          </div>
+
+          <div className="relative z-10 flex items-start gap-3">
+            <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/60 text-zinc-700 dark:text-zinc-300">
+              <Book size={16} />
+            </div>
+            <div className="space-y-1">
+              <p className="text-base sm:text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+                No posts yet
+              </p>
+            </div>
+          </div>
+        </motion.div>
       )}
 
       <div className="space-y-2">
