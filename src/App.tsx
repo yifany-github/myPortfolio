@@ -540,7 +540,7 @@ function HomeContent() {
     <div className="relative space-y-8 animate-in fade-in duration-700">
       <div className="w-24 h-24 bg-zinc-100 dark:bg-zinc-800 rounded-full border-4 border-white dark:border-[#1a1a1a] shadow-md flex items-center justify-center overflow-hidden">
         <img
-          src="https://picsum.photos/seed/portfolio/200/200"
+          src="https://avatars.githubusercontent.com/u/71915211?v=4"
           alt="Avatar"
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
@@ -549,15 +549,15 @@ function HomeContent() {
 
       <div className="space-y-4">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">
-          Hi, I'm Alex. <br />
+          Hi, I'm Yifan. <br />
           <span className="text-zinc-400 dark:text-zinc-500">
-            I build digital experiences.
+            I build modern web products.
           </span>
         </h2>
 
         <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xl">
-          A product designer and frontend engineer. I specialize in creating
-          clean, intuitive, and modern web applications that people love to use.
+          Frontend-focused developer creating interactive and polished user
+          interfaces with React, TypeScript, motion, and thoughtful UX.
         </p>
       </div>
 
@@ -565,7 +565,7 @@ function HomeContent() {
         <div className="inline-flex items-center gap-3 bg-zinc-100 dark:bg-zinc-800/50 px-4 py-2 rounded-full border border-black/5 dark:border-white/5">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
           <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            Available for work
+            Open to collaboration
           </span>
         </div>
       </div>
@@ -576,25 +576,25 @@ function HomeContent() {
 function WorkContent() {
   const work = [
     {
-      period: "2023 — Present",
-      role: "Senior Frontend Engineer",
-      company: "TechNova",
-      desc: "Leading the core product team, architecting scalable React applications and mentoring junior developers.",
+      period: "2025 — Present",
+      role: "Independent Developer",
+      company: "Personal Portfolio & Web Projects",
+      desc: "Designing and shipping portfolio websites and frontend demos with a strong focus on UI detail, animation, and maintainable code.",
     },
     {
-      period: "2020 — 2023",
-      role: "Product Designer",
-      company: "Lumina Studio",
-      desc: "Designed and implemented design systems, improving development velocity by 40%.",
+      period: "2023 — 2025",
+      role: "Frontend Builder",
+      company: "Freelance & Open Source",
+      desc: "Built responsive interfaces, reusable components, and performance-oriented web experiences across React-based projects.",
     },
   ];
 
   const education = [
     {
-      period: "2016 — 2020",
-      role: "B.S. Computer Science",
-      company: "University of Technology",
-      desc: "Specialized in Human-Computer Interaction. Graduated with Honors.",
+      period: "Ongoing",
+      role: "Continuous Learning",
+      company: "Frontend Engineering & Product Design",
+      desc: "Deepening expertise in TypeScript, system design, and interaction design through real projects and iterative practice.",
     },
   ];
 
@@ -670,18 +670,20 @@ function TechContent() {
     "React",
     "Next.js",
     "TypeScript",
+    "Vite",
     "Tailwind CSS",
-    "Framer Motion",
+    "Motion",
     "Node.js",
+    "GitHub Actions",
     "Figma",
-    "UI/UX Design",
+    "UI/UX",
   ];
 
   return (
     <div className="relative space-y-8 animate-in fade-in duration-700">
       <p className="text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed max-w-xl">
-        Technologies and tools I use daily to bring ideas to life, focusing on
-        performance and user experience.
+        Core technologies I use to build fast, maintainable, and user-centered
+        web interfaces.
       </p>
 
       <div className="flex flex-wrap gap-3">
@@ -703,31 +705,31 @@ function BlogContent() {
 
   const posts = [
     {
-      title: "The Art of Minimalist UI Design",
-      date: "Oct 12, 2023",
+      title: "How I Designed This Typewriter Portfolio",
+      date: "Jan 18, 2026",
       excerpt:
-        "Exploring how removing elements can actually enhance the user experience and create more focused interfaces.",
+        "A breakdown of the visual direction, layout decisions, and interaction patterns behind this portfolio.",
       tags: ["Design", "UI/UX"],
       content:
-        "Minimalism in UI design isn't just about using fewer elements; it's about making sure every element that remains serves a clear, undeniable purpose. When we strip away the non-essential, we reduce cognitive load and allow the user to focus entirely on their goals.\n\nConsider the evolution of search engine homepages. The most successful ones didn't add more features to their landing page; they removed everything except the search bar. This extreme focus is the essence of minimalist design.\n\nTo practice minimalism:\n1. Start with the core user goal.\n2. Add only what is necessary to achieve that goal.\n3. Use whitespace generously to create structure.\n4. Rely on typography and subtle color shifts for hierarchy, rather than borders and boxes.",
+        "This portfolio started from a simple question: how can a personal site feel memorable without becoming hard to use? I chose a printer/typewriter metaphor to make navigation feel tactile and deliberate.\n\nThe interface uses one primary interaction model: switch tabs and let a new sheet 'print' into place. That keeps the experience consistent while still playful.\n\nKey principles I followed:\n1. Keep hierarchy obvious at every screen size.\n2. Use motion to communicate state changes, not decoration.\n3. Build reusable layout and card patterns first, then style.",
     },
     {
-      title: "Mastering Framer Motion in React",
-      date: "Sep 28, 2023",
+      title: "Motion Patterns I Reuse in React Projects",
+      date: "Dec 04, 2025",
       excerpt:
-        "A deep dive into creating fluid, physics-based animations that feel natural and responsive.",
+        "My practical approach to transitions, springs, and layout animations that improve UX without hurting performance.",
       tags: ["React", "Animation"],
       content:
-        "Animation on the web has moved past simple CSS transitions. Users now expect fluid, physics-based interactions that respond to their gestures. Framer Motion has emerged as the standard for achieving this in React applications.\n\nThe key to great animation is understanding springs. Unlike CSS easing curves which dictate a fixed duration, springs are physics-based. They calculate motion based on mass, stiffness, and damping. This means if a user interrupts an animation, it can smoothly redirect its momentum, feeling incredibly natural.\n\nWhen implementing animations, always consider the 'why'. Animation should guide the user's eye, provide feedback, or establish spatial relationships between views. It should never just be 'for fun' if it gets in the way of usability.",
+        "I try to keep animations lightweight and predictable. Instead of animating everything, I focus on transitions that clarify user intent, such as section switches, hover feedback, and content reveals.\n\nIn React, I rely on spring-based transitions for most UI movements because they feel natural under interruption. I also keep durations short and avoid large full-page effects on low-power devices.\n\nA simple rule: if animation does not improve orientation, feedback, or hierarchy, remove it.",
     },
     {
-      title: "Why Typography Matters More Than You Think",
-      date: "Aug 15, 2023",
+      title: "Writing Better Project Case Studies",
+      date: "Nov 09, 2025",
       excerpt:
-        "Good typography is invisible, but bad typography ruins the entire experience. Here's how to get it right.",
-      tags: ["Typography", "Design"],
+        "How I structure portfolio project write-ups so recruiters and collaborators can quickly understand impact.",
+      tags: ["Portfolio", "Career"],
       content:
-        "Web design is 95% typography. Before you worry about colors, shadows, or layout grids, you need to get your type right. It's the primary way users consume information on your site.\n\nA few rules of thumb:\n- Limit your font families to two maximum (one for headings, one for body).\n- Ensure your line height (leading) is comfortable. For body text, 1.5 to 1.6 is usually ideal.\n- Keep line lengths (measure) between 45 and 75 characters. Anything longer makes it hard for the eye to track back to the start of the next line.\n- Use contrast to establish hierarchy. Don't just make text bigger; use weight, color, and whitespace to show what's important.",
+        "A good case study should be scannable in less than a minute. I structure each one with context, goals, constraints, process, and measurable outcomes.\n\nI avoid vague claims like 'improved UX' and replace them with concrete evidence: reduced bounce rate, faster task completion, clearer information architecture, or lower maintenance cost.\n\nThe best portfolio writing is concise and specific. It helps people understand how you think, not just what you built.",
     },
   ];
 
@@ -886,7 +888,8 @@ function CommContent() {
   return (
     <div className="relative space-y-8 animate-in fade-in duration-700">
       <p className="text-zinc-600 dark:text-zinc-400 text-lg max-w-xl">
-        Have a project in mind? Let's build something great together.
+        If you want to collaborate on a product, website, or frontend rebuild,
+        feel free to send a message.
       </p>
 
       <div className="space-y-5 max-w-xl">
@@ -897,7 +900,7 @@ function CommContent() {
           <input
             type="email"
             className="w-full bg-zinc-50 dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-zinc-900 dark:text-white"
-            placeholder="hello@example.com"
+            placeholder="yifan@example.com"
           />
         </div>
         <div>
@@ -920,31 +923,31 @@ function CommContent() {
 function ProjectsContent() {
   const projects = [
     {
-      title: "Project Alpha",
-      description: "A revolutionary new platform for digital creators.",
+      title: "myPortfolio",
+      description: "A printer/typewriter-inspired personal portfolio built with React, Vite, TypeScript, and Motion.",
       image: "https://picsum.photos/seed/project1/600/400",
-      tags: ["React", "Node.js", "MongoDB"],
-      link: "#",
+      tags: ["React", "TypeScript", "Vite"],
+      link: "https://github.com/yifany-github/myPortfolio",
     },
     {
-      title: "Beta Dashboard",
-      description: "Analytics dashboard with real-time data visualization.",
+      title: "UI Motion Playground",
+      description: "A collection of reusable micro-interactions and layout transitions for modern web interfaces.",
       image: "https://picsum.photos/seed/project2/600/400",
-      tags: ["Vue", "D3.js", "Firebase"],
+      tags: ["Motion", "React", "Tailwind"],
       link: "#",
     },
     {
-      title: "Gamma Mobile",
-      description: "Cross-platform mobile application for fitness tracking.",
+      title: "Component Starter Kit",
+      description: "A small component library with accessible primitives and consistent visual patterns.",
       image: "https://picsum.photos/seed/project3/600/400",
-      tags: ["React Native", "GraphQL"],
+      tags: ["TypeScript", "Design System"],
       link: "#",
     },
     {
-      title: "Delta Studio",
-      description: "Creative coding environment for generative art.",
+      title: "Frontend Case Study Notes",
+      description: "A writing-focused project for documenting frontend decisions, trade-offs, and outcomes.",
       image: "https://picsum.photos/seed/project4/600/400",
-      tags: ["WebGL", "Three.js", "TypeScript"],
+      tags: ["Portfolio", "Documentation"],
       link: "#",
     },
   ];
@@ -952,7 +955,8 @@ function ProjectsContent() {
   return (
     <div className="relative space-y-8 animate-in fade-in duration-700">
       <p className="text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed max-w-xl">
-        A selection of my recent work and personal projects.
+        Selected projects that represent my approach to frontend engineering and
+        product experience.
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
