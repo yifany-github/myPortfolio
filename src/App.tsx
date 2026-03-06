@@ -50,6 +50,21 @@ const BLOCK_PASSWORD_KEY = "portfolio_blocks_password";
 const BLOCK_PASSWORD_VERSION_KEY = "portfolio_blocks_password_version";
 const BLOCK_PASSWORD_VERSION = "2";
 const BLOCK_PASSWORD_SEED = "Yy4210752";
+const THEME_MODE_STORAGE_KEY = "portfolio_theme_mode";
+
+type ThemeMode = "auto" | "light" | "dark";
+
+const getSystemPrefersDark = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+const CONTACT_LINKS = {
+  instagram: "https://www.instagram.com/kent2197/",
+  linkedin: "https://linkedin.com/in/yifan-yang-765234256",
+  email: "mailto:vapouryang@gmail.com",
+  x: "https://x.com/hiYYToo",
+  github: "https://github.com/yifany-github",
+};
 
 const createEmptyDraft = (): BlockDraft => ({
   title: "",
@@ -111,27 +126,49 @@ const SocialSticker = ({
   rotate,
   className,
   constraintsRef,
-}: any) => (
-  <motion.div
-    drag
-    dragConstraints={constraintsRef}
-    whileHover={{ scale: 1.1, zIndex: 100 }}
-    whileDrag={{ scale: 1.2, rotate: 0, zIndex: 100 }}
-    className={`absolute z-[60] cursor-grab active:cursor-grabbing ${className}`}
-    style={{ rotate: `${rotate}deg`, touchAction: "none" }}
-  >
-    <svg
-      viewBox="0 0 24 24"
-      width="48"
-      height="48"
-      overflow="visible"
-      filter="url(#sticker-outline)"
-      style={{ fill: color }}
+  href,
+  label,
+}: any) => {
+  const suppressClickUntilRef = useRef(0);
+  const blockNextClick = () => {
+    suppressClickUntilRef.current = Date.now() + 500;
+  };
+
+  return (
+    <motion.a
+      href={href}
+      target={href?.startsWith("mailto:") ? undefined : "_blank"}
+      rel={href?.startsWith("mailto:") ? undefined : "noreferrer"}
+      aria-label={label}
+      title={label}
+      drag
+      dragConstraints={constraintsRef}
+      onDragStart={blockNextClick}
+      onDragEnd={blockNextClick}
+      onClick={(e) => {
+        if (Date.now() < suppressClickUntilRef.current) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }}
+      whileHover={{ scale: 1.1, zIndex: 100 }}
+      whileDrag={{ scale: 1.2, rotate: 0, zIndex: 100 }}
+      className={`absolute z-[60] cursor-grab active:cursor-grabbing ${className}`}
+      style={{ rotate: `${rotate}deg`, touchAction: "none" }}
     >
-      <path d={path} />
-    </svg>
-  </motion.div>
-);
+      <svg
+        viewBox="0 0 24 24"
+        width="48"
+        height="48"
+        overflow="visible"
+        filter="url(#sticker-outline)"
+        style={{ fill: color }}
+      >
+        <path d={path} />
+      </svg>
+    </motion.a>
+  );
+};
 
 const ShinChanSticker = ({
   constraintsRef,
@@ -267,15 +304,35 @@ const PerforatedLine = () => (
 );
 
 const RotatingThemeToggle = ({
+  mode,
   isDark,
   toggle,
 }: {
+  mode: ThemeMode;
   isDark: boolean;
   toggle: () => void;
 }) => {
+  const AutoThemeIcon = () => (
+    <div className="relative w-6 h-6" aria-hidden="true">
+      <Sun
+        size={22}
+        strokeWidth={2.2}
+        className="absolute inset-0 m-auto text-zinc-800 dark:text-zinc-200"
+        style={{ clipPath: "inset(0 50% 0 0)" }}
+      />
+      <Moon
+        size={22}
+        strokeWidth={2.2}
+        className="absolute inset-0 m-auto text-zinc-800 dark:text-zinc-200"
+        style={{ clipPath: "inset(0 0 0 50%)" }}
+      />
+    </div>
+  );
+
   return (
     <motion.button
       onClick={toggle}
+      aria-label={`Theme mode: ${mode}. Click to cycle.`}
       className="relative w-16 h-16 flex-shrink-0 flex items-center justify-center rounded-full bg-white dark:bg-[#1a1a1a] border border-black/5 dark:border-white/10 shadow-sm cursor-pointer text-zinc-800 dark:text-zinc-200"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
@@ -298,13 +355,21 @@ const RotatingThemeToggle = ({
             className="font-mono uppercase fill-current opacity-40"
           >
             <textPath href="#circlePath" startOffset="0%">
-              TOGGLE THEME • TOGGLE THEME •
+              {mode === "auto"
+                ? "AUTO THEME • AUTO THEME •"
+                : "TOGGLE THEME • TOGGLE THEME •"}
             </textPath>
           </text>
         </svg>
       </motion.div>
       <div className="relative z-10">
-        {isDark ? <Sun size={20} /> : <Moon size={20} />}
+        {mode === "auto" ? (
+          <AutoThemeIcon />
+        ) : isDark ? (
+          <Moon size={20} />
+        ) : (
+          <Sun size={20} />
+        )}
       </div>
     </motion.button>
   );
@@ -404,7 +469,8 @@ export default function App() {
   const [mode, setMode] = useState<"portfolio" | "journal">("portfolio");
   const [activeTab, setActiveTab] = useState(TABS[0].id);
   const [isPrinting, setIsPrinting] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const [themeMode, setThemeMode] = useState<ThemeMode>("auto");
+  const [isDark, setIsDark] = useState<boolean>(getSystemPrefersDark);
   const [blocks, setBlocks] = useState<BlockItem[]>(DEFAULT_BLOCKS);
   const [isBlockAdminOpen, setIsBlockAdminOpen] = useState(false);
   const [isBlockAdminAuthed, setIsBlockAdminAuthed] = useState(false);
@@ -428,6 +494,38 @@ export default function App() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const applyTheme = () => {
+      if (themeMode === "dark") {
+        setIsDark(true);
+      } else if (themeMode === "light") {
+        setIsDark(false);
+      } else {
+        setIsDark(mediaQuery.matches);
+      }
+    };
+
+    const handleSystemThemeChange = () => {
+      if (themeMode === "auto") {
+        setIsDark(mediaQuery.matches);
+      }
+    };
+
+    applyTheme();
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleSystemThemeChange);
+      return () =>
+        mediaQuery.removeEventListener("change", handleSystemThemeChange);
+    }
+
+    mediaQuery.addListener(handleSystemThemeChange);
+    return () => mediaQuery.removeListener(handleSystemThemeChange);
+  }, [themeMode]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     const savedBlocks = localStorage.getItem(BLOCKS_STORAGE_KEY);
     if (savedBlocks) {
       try {
@@ -447,12 +545,28 @@ export default function App() {
     } else if (!localStorage.getItem(BLOCK_PASSWORD_KEY)) {
       localStorage.setItem(BLOCK_PASSWORD_KEY, BLOCK_PASSWORD_SEED);
     }
+
+    const savedThemeMode = localStorage.getItem(THEME_MODE_STORAGE_KEY);
+    if (
+      savedThemeMode === "auto" ||
+      savedThemeMode === "light" ||
+      savedThemeMode === "dark"
+    ) {
+      setThemeMode(savedThemeMode as ThemeMode);
+    } else {
+      setThemeMode("auto");
+    }
   }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     localStorage.setItem(BLOCKS_STORAGE_KEY, JSON.stringify(blocks));
   }, [blocks]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    localStorage.setItem(THEME_MODE_STORAGE_KEY, themeMode);
+  }, [themeMode]);
 
   const openBlockAdmin = () => {
     setIsBlockAdminOpen(true);
@@ -581,6 +695,12 @@ export default function App() {
     setTimeout(() => setIsPrinting(false), 600);
   };
 
+  const handleThemeModeToggle = () => {
+    setThemeMode((prev) =>
+      prev === "auto" ? "light" : prev === "light" ? "dark" : "auto"
+    );
+  };
+
   return (
     <div
       ref={containerRef}
@@ -679,6 +799,8 @@ export default function App() {
         rotate={12}
         className="top-6 left-[20%] hidden md:block"
         constraintsRef={constraintsRef}
+        href={CONTACT_LINKS.github}
+        label="GitHub"
       />
       <SocialSticker
         path={SOCIAL_PATHS.x}
@@ -686,6 +808,8 @@ export default function App() {
         rotate={-8}
         className="top-5 left-[6%] hidden md:block"
         constraintsRef={constraintsRef}
+        href={CONTACT_LINKS.x}
+        label="X"
       />
       <SocialSticker
         path={SOCIAL_PATHS.instagram}
@@ -693,6 +817,8 @@ export default function App() {
         rotate={15}
         className="top-6 right-[28%] hidden md:block"
         constraintsRef={constraintsRef}
+        href={CONTACT_LINKS.instagram}
+        label="Instagram"
       />
       <SocialSticker
         path={SOCIAL_PATHS.linkedin}
@@ -700,6 +826,8 @@ export default function App() {
         rotate={-15}
         className="top-36 right-[6%] hidden md:block"
         constraintsRef={constraintsRef}
+        href={CONTACT_LINKS.linkedin}
+        label="LinkedIn"
       />
       <ImageIconSticker
         src="/ucl.png"
@@ -803,8 +931,9 @@ export default function App() {
               <div className="flex items-center gap-2 sm:gap-3 justify-end shrink-0">
                 <div className="scale-75 sm:scale-100 origin-right">
                   <RotatingThemeToggle
+                    mode={themeMode}
                     isDark={isDark}
-                    toggle={() => setIsDark(!isDark)}
+                    toggle={handleThemeModeToggle}
                   />
                 </div>
               </div>
@@ -1583,38 +1712,81 @@ function BlogContent({ posts }: { posts: BlockItem[] }) {
 }
 
 function CommContent() {
+  const iconLinks = [
+    {
+      id: "linkedin",
+      href: CONTACT_LINKS.linkedin,
+      label: "LinkedIn",
+      color: "#0A66C2",
+      path: SOCIAL_PATHS.linkedin,
+    },
+    {
+      id: "github",
+      href: CONTACT_LINKS.github,
+      label: "GitHub",
+      color: "#181717",
+      path: SOCIAL_PATHS.github,
+    },
+    {
+      id: "email",
+      href: CONTACT_LINKS.email,
+      label: "Email",
+      color: "#2563EB",
+      path: null,
+    },
+    {
+      id: "x",
+      href: CONTACT_LINKS.x,
+      label: "X",
+      color: "#111827",
+      path: SOCIAL_PATHS.x,
+    },
+    {
+      id: "instagram",
+      href: CONTACT_LINKS.instagram,
+      label: "Instagram",
+      color: "#E4405F",
+      path: SOCIAL_PATHS.instagram,
+    },
+  ];
+
   return (
     <div className="relative space-y-8 animate-in fade-in duration-700">
       <p className="text-zinc-600 dark:text-zinc-400 text-lg max-w-xl">
-        Best way to reach me is through GitHub. I am open to discussions around
-        frontend engineering, product UX, and practical AI applications.
+        Open to collaboration and new opportunities. Reach out through any of
+        these channels.
       </p>
 
-      <div className="space-y-4 max-w-xl">
-        <div className="p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-zinc-50 dark:bg-zinc-900/40">
-          <p className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
-            GitHub
-          </p>
+      <div className="flex flex-wrap items-center gap-5 sm:gap-6 max-w-xl">
+        {iconLinks.map((item) => (
           <a
-            href="https://github.com/yifany-github"
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm sm:text-base font-medium text-blue-600 dark:text-blue-400 hover:underline"
+            key={item.id}
+            href={item.href}
+            target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+            rel={item.href.startsWith("mailto:") ? undefined : "noreferrer"}
+            aria-label={item.label}
+            title={item.label}
+            className="group inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 hover:scale-110 transition-transform"
           >
-            github.com/yifany-github
+            {item.path ? (
+              <svg
+                viewBox="0 0 24 24"
+                width="30"
+                height="30"
+                style={{ fill: item.color }}
+                className="opacity-95 group-hover:opacity-100"
+              >
+                <path d={item.path} />
+              </svg>
+            ) : (
+              <Mail
+                size={30}
+                style={{ color: item.color }}
+                className="opacity-95 group-hover:opacity-100"
+              />
+            )}
           </a>
-        </div>
-        <div className="p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-zinc-50 dark:bg-zinc-900/40">
-          <p className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
-            Email
-          </p>
-          <a
-            href="mailto:71915211+yifany-github@users.noreply.github.com"
-            className="text-sm sm:text-base font-medium text-blue-600 dark:text-blue-400 hover:underline break-all"
-          >
-            71915211+yifany-github@users.noreply.github.com
-          </a>
-        </div>
+        ))}
       </div>
     </div>
   );
