@@ -17,6 +17,7 @@ import {
   GraduationCap,
   Book,
   Palette,
+  CornerDownLeft,
 } from "lucide-react";
 
 const TABS = [
@@ -25,6 +26,70 @@ const TABS = [
   { id: "projects", label: "Projects", icon: Rocket },
   { id: "tech", label: "Skills", icon: Sparkles },
   { id: "comm", label: "Contact", icon: Mail },
+];
+
+type BlockItem = {
+  id: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  tags: string[];
+  content: string;
+};
+
+type BlockDraft = {
+  title: string;
+  date: string;
+  excerpt: string;
+  tagsInput: string;
+  content: string;
+};
+
+const BLOCKS_STORAGE_KEY = "portfolio_blocks";
+const BLOCK_PASSWORD_KEY = "portfolio_blocks_password";
+const BLOCK_PASSWORD_VERSION_KEY = "portfolio_blocks_password_version";
+const BLOCK_PASSWORD_VERSION = "2";
+const BLOCK_PASSWORD_SEED = "Yy4210752";
+
+const createEmptyDraft = (): BlockDraft => ({
+  title: "",
+  date: new Date().toISOString().slice(0, 10),
+  excerpt: "",
+  tagsInput: "",
+  content: "",
+});
+
+const DEFAULT_BLOCKS: BlockItem[] = [
+  {
+    id: "block-lumina",
+    title: "Building Lumina: AI-Powered Bookmark Search",
+    date: "2026-01-18",
+    excerpt:
+      "How I approached turning messy browser bookmarks into a searchable knowledge base with AI summaries and tags.",
+    tags: ["AI", "Product"],
+    content:
+      "Lumina came from a simple pain point: bookmarks grow quickly, but finding what matters later is hard. I wanted a workflow where saved pages become useful context instead of clutter.\n\nI focused on three capabilities: concise summaries, meaningful tags, and semantic search. The project pushed me to think beyond basic keyword matching and design for intent-based retrieval.\n\nThe biggest lesson was product framing: users care less about the model and more about getting a useful answer fast.",
+  },
+  {
+    id: "block-portfolio",
+    title: "Designing a Portfolio That Feels Like a Product",
+    date: "2025-12-04",
+    excerpt:
+      "Notes on building this portfolio as a deliberate user experience, not just a static showcase page.",
+    tags: ["Frontend", "Design"],
+    content:
+      "I treated this portfolio like a product interface. The printer metaphor gave me a strong interaction model, but I still prioritized legibility and quick scanning for hiring contexts.\n\nMotion is used to guide attention during tab transitions and content reveals. I kept animation scoped so performance stays stable and interaction remains clear.\n\nThis process reinforced a recurring principle: memorable visual language works best when paired with predictable structure.",
+  },
+  {
+    id: "block-side-project-strategy",
+    title: "Small Tools, Real Utility: Side Project Strategy",
+    date: "2025-11-09",
+    excerpt:
+      "Why I keep building focused utility projects and what they taught me about engineering trade-offs.",
+    tags: ["Engineering", "Learning"],
+    content:
+      "Not every project has to be huge. Focused tools like calculators, quality-of-life fixes, or workflow helpers are great environments to practice clear problem framing and shipping discipline.\n\nThese projects force practical decisions: what to automate, what to postpone, and how to keep scope under control while still delivering value.\n\nOver time, small wins compound into stronger engineering judgment and better product intuition.",
+  },
 ];
 
 const Sticker = ({ children, rotate, className, constraintsRef }: any) => (
@@ -64,6 +129,117 @@ const SocialSticker = ({
       style={{ fill: color }}
     >
       <path d={path} />
+    </svg>
+  </motion.div>
+);
+
+const ShinChanSticker = ({
+  constraintsRef,
+  className,
+}: {
+  constraintsRef: any;
+  className?: string;
+}) => {
+  const [isDragging, setIsDragging] = useState(false);
+
+  return (
+    <motion.div
+      drag
+      dragConstraints={constraintsRef}
+      dragElastic={0.08}
+      dragMomentum={false}
+      onDragStart={() => setIsDragging(true)}
+      onDragEnd={() => setIsDragging(false)}
+      whileHover={{ scale: 1.06, rotate: 1, zIndex: 120 }}
+      whileDrag={{ scale: 1.12, rotate: 0, zIndex: 120 }}
+      className={`absolute z-[70] cursor-grab active:cursor-grabbing ${className ?? ""}`}
+      style={{ touchAction: "none" }}
+    >
+      <div className="relative w-[76px] h-[94px]">
+        {isDragging && (
+          <>
+            <motion.div
+              className="absolute left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2 w-[62px] h-[62px] rounded-full border-[3px] border-amber-400/80"
+              initial={{ scale: 0.8, opacity: 0.7 }}
+              animate={{ scale: 1.25, opacity: 0 }}
+              transition={{ duration: 0.75, repeat: Infinity, ease: "easeOut" }}
+            />
+            {[
+              "left-[8%] top-[12%]",
+              "right-[4%] top-[22%]",
+              "left-[18%] bottom-[24%]",
+              "right-[14%] bottom-[32%]",
+            ].map((pos) => (
+              <motion.span
+                key={pos}
+                className={`absolute ${pos} text-amber-400 text-sm font-bold`}
+                animate={{
+                  y: [0, -8, 0],
+                  opacity: [0.2, 1, 0.2],
+                  rotate: [-8, 8, -8],
+                }}
+                transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut" }}
+              >
+                ✦
+              </motion.span>
+            ))}
+          </>
+        )}
+
+        <svg
+          viewBox="0 0 76 90"
+          width="76"
+          height="90"
+          overflow="visible"
+          className="relative z-10 select-none pointer-events-none"
+        >
+          <image
+            href="https://raw.githubusercontent.com/Ding0327/Crayon-Shin-chan/master/Crayon_Shin-chan.png"
+            x="0"
+            y="0"
+            width="76"
+            height="90"
+            preserveAspectRatio="xMidYMid meet"
+            filter="url(#sticker-outline)"
+          />
+        </svg>
+      </div>
+    </motion.div>
+  );
+};
+
+const ImageIconSticker = ({
+  src,
+  rotate,
+  className,
+  constraintsRef,
+  size = 64,
+  filterId = "sticker-outline",
+}: any) => (
+  <motion.div
+    drag
+    dragConstraints={constraintsRef}
+    whileHover={{ scale: 1.1, zIndex: 100 }}
+    whileDrag={{ scale: 1.2, rotate: 0, zIndex: 100 }}
+    className={`absolute z-[60] cursor-grab active:cursor-grabbing ${className}`}
+    style={{ rotate: `${rotate}deg`, touchAction: "none" }}
+  >
+    <svg
+      viewBox="0 0 64 64"
+      width={size}
+      height={size}
+      overflow="visible"
+      className="select-none pointer-events-none"
+    >
+      <image
+        href={src}
+        x="0"
+        y="0"
+        width="64"
+        height="64"
+        preserveAspectRatio="xMidYMid meet"
+        filter={`url(#${filterId})`}
+      />
     </svg>
   </motion.div>
 );
@@ -229,6 +405,16 @@ export default function App() {
   const [activeTab, setActiveTab] = useState(TABS[0].id);
   const [isPrinting, setIsPrinting] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [blocks, setBlocks] = useState<BlockItem[]>(DEFAULT_BLOCKS);
+  const [isBlockAdminOpen, setIsBlockAdminOpen] = useState(false);
+  const [isBlockAdminAuthed, setIsBlockAdminAuthed] = useState(false);
+  const [adminPasswordInput, setAdminPasswordInput] = useState("");
+  const [adminPasswordError, setAdminPasswordError] = useState("");
+  const [newPasswordInput, setNewPasswordInput] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [showAdminPassword, setShowAdminPassword] = useState(false);
+  const [editingBlockId, setEditingBlockId] = useState<string | null>(null);
+  const [draftBlock, setDraftBlock] = useState<BlockDraft>(createEmptyDraft());
   const containerRef = useRef(null);
   const constraintsRef = useRef(null);
 
@@ -239,6 +425,147 @@ export default function App() {
       document.documentElement.classList.remove("dark");
     }
   }, [isDark]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const savedBlocks = localStorage.getItem(BLOCKS_STORAGE_KEY);
+    if (savedBlocks) {
+      try {
+        const parsed = JSON.parse(savedBlocks);
+        if (Array.isArray(parsed)) {
+          setBlocks(parsed as BlockItem[]);
+        }
+      } catch {
+        // Ignore malformed saved data and keep defaults.
+      }
+    }
+
+    const passwordVersion = localStorage.getItem(BLOCK_PASSWORD_VERSION_KEY);
+    if (passwordVersion !== BLOCK_PASSWORD_VERSION) {
+      localStorage.setItem(BLOCK_PASSWORD_KEY, BLOCK_PASSWORD_SEED);
+      localStorage.setItem(BLOCK_PASSWORD_VERSION_KEY, BLOCK_PASSWORD_VERSION);
+    } else if (!localStorage.getItem(BLOCK_PASSWORD_KEY)) {
+      localStorage.setItem(BLOCK_PASSWORD_KEY, BLOCK_PASSWORD_SEED);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    localStorage.setItem(BLOCKS_STORAGE_KEY, JSON.stringify(blocks));
+  }, [blocks]);
+
+  const openBlockAdmin = () => {
+    setIsBlockAdminOpen(true);
+    setAdminPasswordInput("");
+    setAdminPasswordError("");
+    setPasswordMessage("");
+    setShowAdminPassword(false);
+  };
+
+  const closeBlockAdmin = () => {
+    setIsBlockAdminOpen(false);
+    setIsBlockAdminAuthed(false);
+    setEditingBlockId(null);
+    setDraftBlock(createEmptyDraft());
+    setAdminPasswordInput("");
+    setAdminPasswordError("");
+    setPasswordMessage("");
+    setNewPasswordInput("");
+    setShowAdminPassword(false);
+  };
+
+  const handleBlockAdminLogin = () => {
+    if (typeof window === "undefined") return;
+    let expectedPassword = localStorage.getItem(BLOCK_PASSWORD_KEY) || "";
+    if (!expectedPassword) {
+      localStorage.setItem(BLOCK_PASSWORD_KEY, BLOCK_PASSWORD_SEED);
+      expectedPassword = BLOCK_PASSWORD_SEED;
+    }
+    if (adminPasswordInput === expectedPassword) {
+      setIsBlockAdminAuthed(true);
+      setAdminPasswordError("");
+      return;
+    }
+    setAdminPasswordError("Incorrect password. Please try again.");
+  };
+
+  const handleSaveBlock = () => {
+    const title = draftBlock.title.trim();
+    const content = draftBlock.content.trim();
+    if (!title || !content) return;
+
+    const parsedTags = draftBlock.tagsInput
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter(Boolean);
+
+    if (editingBlockId) {
+      setBlocks((prev) =>
+        prev.map((item) =>
+          item.id === editingBlockId
+            ? {
+                ...item,
+                title,
+                date: draftBlock.date,
+                excerpt: draftBlock.excerpt.trim(),
+                tags: parsedTags,
+                content,
+              }
+            : item
+        )
+      );
+    } else {
+      setBlocks((prev) => [
+        {
+          id: `block-${Date.now()}`,
+          title,
+          date: draftBlock.date,
+          excerpt: draftBlock.excerpt.trim(),
+          tags: parsedTags,
+          content,
+        },
+        ...prev,
+      ]);
+    }
+
+    setEditingBlockId(null);
+    setDraftBlock(createEmptyDraft());
+  };
+
+  const handleEditBlock = (item: BlockItem) => {
+    setEditingBlockId(item.id);
+    setDraftBlock({
+      title: item.title,
+      date: item.date,
+      excerpt: item.excerpt,
+      tagsInput: item.tags.join(", "),
+      content: item.content,
+    });
+  };
+
+  const handleDeleteBlock = (id: string) => {
+    if (typeof window !== "undefined") {
+      const shouldDelete = window.confirm("Delete this block?");
+      if (!shouldDelete) return;
+    }
+    setBlocks((prev) => prev.filter((item) => item.id !== id));
+    if (editingBlockId === id) {
+      setEditingBlockId(null);
+      setDraftBlock(createEmptyDraft());
+    }
+  };
+
+  const handleChangePassword = () => {
+    if (typeof window === "undefined") return;
+    const next = newPasswordInput.trim();
+    if (next.length < 4) {
+      setPasswordMessage("Password must be at least 4 characters.");
+      return;
+    }
+    localStorage.setItem(BLOCK_PASSWORD_KEY, next);
+    setNewPasswordInput("");
+    setPasswordMessage("Password updated.");
+  };
 
   const handleTabChange = (id: string) => {
     if (id === activeTab || isPrinting) return;
@@ -301,6 +628,39 @@ export default function App() {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          <filter
+            id="sticker-outline-wide"
+            x="-24%"
+            y="-24%"
+            width="148%"
+            height="148%"
+          >
+            <feMorphology
+              in="SourceAlpha"
+              operator="dilate"
+              radius="2.3"
+              result="OUTLINE"
+            />
+            <feFlood floodColor="white" floodOpacity="1" result="COLOR" />
+            <feComposite
+              in="COLOR"
+              in2="OUTLINE"
+              operator="in"
+              result="COLORED_OUTLINE"
+            />
+            <feDropShadow
+              dx="0"
+              dy="1.5"
+              stdDeviation="1.5"
+              floodColor="rgba(0,0,0,0.15)"
+              result="SHADOW"
+            />
+            <feMerge>
+              <feMergeNode in="SHADOW" />
+              <feMergeNode in="COLORED_OUTLINE" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
       </svg>
 
@@ -324,7 +684,7 @@ export default function App() {
         path={SOCIAL_PATHS.x}
         color="#000000"
         rotate={-8}
-        className="top-4 left-[35%] hidden md:block"
+        className="top-5 left-[6%] hidden md:block"
         constraintsRef={constraintsRef}
       />
       <SocialSticker
@@ -339,6 +699,37 @@ export default function App() {
         color="#0A66C2"
         rotate={-15}
         className="top-36 right-[6%] hidden md:block"
+        constraintsRef={constraintsRef}
+      />
+      <ImageIconSticker
+        src="/ucl.png"
+        size={128}
+        rotate={-10}
+        className="top-[10.5rem] left-[26%] hidden md:block"
+        constraintsRef={constraintsRef}
+      />
+      <ImageIconSticker
+        src="/uottawa.png"
+        rotate={8}
+        className="top-[10.5rem] right-[26%] hidden md:block"
+        filterId="sticker-outline-wide"
+        constraintsRef={constraintsRef}
+      />
+      <ImageIconSticker
+        src="/upei.png"
+        size={96}
+        rotate={-6}
+        className="top-[15rem] right-[18%] hidden md:block"
+        constraintsRef={constraintsRef}
+      />
+      <ImageIconSticker
+        src="/guitar_transparent.png"
+        rotate={9}
+        className="top-24 left-[9%] hidden md:block"
+        constraintsRef={constraintsRef}
+      />
+      <ShinChanSticker
+        className="top-32 right-[16%]"
         constraintsRef={constraintsRef}
       />
       <Sticker
@@ -409,11 +800,13 @@ export default function App() {
               </div>
 
               {/* Right: Theme Toggle */}
-              <div className="flex justify-end scale-75 sm:scale-100 origin-right shrink-0">
-                <RotatingThemeToggle
-                  isDark={isDark}
-                  toggle={() => setIsDark(!isDark)}
-                />
+              <div className="flex items-center gap-2 sm:gap-3 justify-end shrink-0">
+                <div className="scale-75 sm:scale-100 origin-right">
+                  <RotatingThemeToggle
+                    isDark={isDark}
+                    toggle={() => setIsDark(!isDark)}
+                  />
+                </div>
               </div>
             </div>
 
@@ -501,23 +894,22 @@ export default function App() {
         <AnimatePresence mode="wait">
           <motion.div
             key={mode === "journal" ? "journal" : activeTab}
-            initial={{ y: "-100%", opacity: 0.5, rotateZ: 0 }}
+            initial={{ y: "-100%", opacity: 0.55, rotateZ: 0 }}
             animate={{ y: 0, opacity: 1, rotateZ: 0 }}
             exit={{
               y: [0, 40, 1000],
-              x: [0, 30, 200],
-              rotateZ: [0, -15, -45],
-              scale: [1, 1, 0.8],
+              rotateZ: [0, -12, -38],
+              scale: [1, 1, 0.84],
               opacity: [1, 1, 0],
               transition: {
-                duration: 0.6,
+                duration: 0.58,
                 times: [0, 0.2, 1],
                 ease: "easeInOut",
               },
             }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             style={{ 
-              transformOrigin: "100% 6px", 
+              transformOrigin: "100% 6px",
               marginTop: "24px",
               ...(mode === "journal" ? {
                 backgroundImage: `repeating-linear-gradient(transparent, transparent 31px, ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'} 31px, ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'} 32px)`,
@@ -540,7 +932,7 @@ export default function App() {
             <div className="flex-1 px-5 sm:px-8 md:px-12 pb-4 md:pb-6 pt-6 md:pt-8 paper-scroll overflow-y-auto overflow-x-hidden">
               <PaperHeader activeTab={activeTab} mode={mode} />
               {mode === "journal" ? (
-                <BlogContent />
+                <BlogContent posts={blocks} />
               ) : (
                 <>
                   {activeTab === "home" && <HomeContent />}
@@ -559,21 +951,300 @@ export default function App() {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      <motion.button
+        onClick={openBlockAdmin}
+        whileHover={{ scale: 1.03, y: -1 }}
+        whileTap={{ scale: 0.97 }}
+        aria-label="Open block manager"
+        className="fixed bottom-5 right-5 z-[150] cursor-pointer select-none"
+      >
+        <span className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-2xl bg-zinc-900/20 dark:bg-black/50" />
+        <span className="relative inline-flex items-center gap-3 rounded-2xl border border-zinc-300 dark:border-zinc-600 bg-gradient-to-b from-white to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 px-4 py-3 text-zinc-900 dark:text-zinc-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-900">
+            <CornerDownLeft size={16} strokeWidth={2.2} />
+          </span>
+          <span className="flex flex-col leading-none">
+            <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
+              Enter
+            </span>
+            <span className="text-sm font-bold tracking-tight">Write</span>
+          </span>
+        </span>
+      </motion.button>
+
+      {isBlockAdminOpen && (
+        <div className="fixed inset-0 z-[160] bg-black/45 backdrop-blur-[1px] p-4 flex items-center justify-center">
+          <div className="w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-[#171717] border border-black/10 dark:border-white/10 shadow-2xl p-4 sm:p-6">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-xl sm:text-2xl font-display font-bold text-zinc-900 dark:text-white">
+                Block Manager
+              </h3>
+              <button
+                onClick={closeBlockAdmin}
+                className="px-3 py-1.5 rounded-lg text-sm font-medium bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+
+            {!isBlockAdminAuthed ? (
+              <div className="max-w-md space-y-4">
+                <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                  Enter your password to unlock block management.
+                </p>
+                <input
+                  type={showAdminPassword ? "text" : "password"}
+                  value={adminPasswordInput}
+                  onChange={(e) => setAdminPasswordInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleBlockAdminLogin();
+                  }}
+                  placeholder="Enter password"
+                  className="w-full bg-zinc-50 dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                />
+                <label className="inline-flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 select-none">
+                  <input
+                    type="checkbox"
+                    checked={showAdminPassword}
+                    onChange={(e) => setShowAdminPassword(e.target.checked)}
+                    className="rounded border-zinc-300 dark:border-zinc-600"
+                  />
+                  Show password
+                </label>
+                {adminPasswordError && (
+                  <p className="text-sm text-red-500">{adminPasswordError}</p>
+                )}
+                <p className="text-xs text-zinc-500 dark:text-zinc-500">
+                  Password is set and stored in this browser.
+                </p>
+                <button
+                  onClick={handleBlockAdminLogin}
+                  className="w-full py-3 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors"
+                >
+                  Unlock Manager
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
+                <div className="lg:col-span-3 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input
+                      value={draftBlock.title}
+                      onChange={(e) =>
+                        setDraftBlock((prev) => ({ ...prev, title: e.target.value }))
+                      }
+                      placeholder="Title"
+                      className="w-full bg-zinc-50 dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                    />
+                    <input
+                      type="date"
+                      value={draftBlock.date}
+                      onChange={(e) =>
+                        setDraftBlock((prev) => ({ ...prev, date: e.target.value }))
+                      }
+                      className="w-full bg-zinc-50 dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                    />
+                  </div>
+                  <textarea
+                    value={draftBlock.excerpt}
+                    onChange={(e) =>
+                      setDraftBlock((prev) => ({ ...prev, excerpt: e.target.value }))
+                    }
+                    placeholder="Excerpt (shown in list)"
+                    rows={2}
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 resize-none"
+                  />
+                  <input
+                    value={draftBlock.tagsInput}
+                    onChange={(e) =>
+                      setDraftBlock((prev) => ({ ...prev, tagsInput: e.target.value }))
+                    }
+                    placeholder="Tags, comma-separated (e.g. AI, Product)"
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                  />
+                  <textarea
+                    value={draftBlock.content}
+                    onChange={(e) =>
+                      setDraftBlock((prev) => ({ ...prev, content: e.target.value }))
+                    }
+                    placeholder="Content (supports paragraph breaks)"
+                    rows={10}
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 resize-y"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={handleSaveBlock}
+                      className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors"
+                    >
+                      {editingBlockId ? "Update Block" : "Add Block"}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setEditingBlockId(null);
+                        setDraftBlock(createEmptyDraft());
+                      }}
+                      className="px-4 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm font-medium hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-2 space-y-4">
+                  <div className="p-3 rounded-xl border border-black/10 dark:border-white/10 bg-zinc-50 dark:bg-zinc-900/40">
+                    <p className="text-xs font-semibold mb-2 text-zinc-600 dark:text-zinc-300">
+                      Update manager password
+                    </p>
+                    <div className="flex gap-2">
+                      <input
+                        type="password"
+                        value={newPasswordInput}
+                        onChange={(e) => setNewPasswordInput(e.target.value)}
+                        placeholder="New password"
+                        className="flex-1 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                      />
+                      <button
+                        onClick={handleChangePassword}
+                        className="px-3 py-2 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-semibold"
+                      >
+                        Save
+                      </button>
+                    </div>
+                    {passwordMessage && (
+                      <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+                        {passwordMessage}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2 max-h-[46vh] overflow-y-auto pr-1">
+                    {blocks.map((item) => (
+                      <div
+                        key={item.id}
+                        className="p-3 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900/30"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 line-clamp-2">
+                              {item.title}
+                            </h4>
+                            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+                              {item.date}
+                            </p>
+                          </div>
+                          <div className="flex gap-1.5 shrink-0">
+                            <button
+                              onClick={() => handleEditBlock(item)}
+                              className="px-2 py-1 rounded-md text-xs bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteBlock(item.id)}
+                              className="px-2 py-1 rounded-md text-xs bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/40"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                        {item.excerpt && (
+                          <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 line-clamp-2">
+                            {item.excerpt}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 function HomeContent() {
+  const [isRealPhoto, setIsRealPhoto] = useState(false);
+  const [isAvatarFlipping, setIsAvatarFlipping] = useState(false);
+  const [avatarYRotation, setAvatarYRotation] = useState(0);
+
+  const handleAvatarClick = () => {
+    if (isAvatarFlipping) return;
+    setIsAvatarFlipping(true);
+    setAvatarYRotation(82);
+    setTimeout(() => {
+      setIsRealPhoto((prev) => !prev);
+      setAvatarYRotation(-82);
+      setTimeout(() => setAvatarYRotation(0), 16);
+    }, 170);
+    setTimeout(() => setIsAvatarFlipping(false), 360);
+  };
+
   return (
     <div className="relative space-y-8 animate-in fade-in duration-700">
-      <div className="w-24 h-24 bg-zinc-100 dark:bg-zinc-800 rounded-full border-4 border-white dark:border-[#1a1a1a] shadow-md flex items-center justify-center overflow-hidden">
-        <img
-          src="https://avatars.githubusercontent.com/u/71915211?v=4"
-          alt="Avatar"
-          className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
+      <button
+        type="button"
+        onClick={handleAvatarClick}
+        className="relative w-32 h-32 sm:w-36 sm:h-36 overflow-visible cursor-pointer"
+        aria-label="Toggle profile photo"
+      >
+        <div className="absolute inset-0 rounded-full bg-gradient-to-b from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900 shadow-[0_12px_26px_-14px_rgba(0,0,0,0.5)]" />
+
+        {/* Back ring: sits behind the avatar */}
+        <div
+          className="absolute inset-0 rounded-full border-[6px] border-white dark:border-[#1a1a1a] pointer-events-none z-10"
+          style={{ clipPath: "inset(0 0 50% 0)" }}
         />
-      </div>
+
+        <AnimatePresence mode="wait" initial={false}>
+          {!isRealPhoto ? (
+            <motion.img
+              key="cartoon"
+              src="/caprofile_transparent.png"
+              alt="Yifan avatar"
+              referrerPolicy="no-referrer"
+              className="absolute left-1/2 -translate-x-1/2 -top-[30%] w-[146%] h-[146%] object-contain drop-shadow-[0_14px_16px_rgba(0,0,0,0.3)] z-20"
+              initial={false}
+              animate={
+                isAvatarFlipping
+                  ? { rotateY: avatarYRotation, y: 0, opacity: 1 }
+                  : { y: [0, -2, 0], opacity: 1, rotateY: 0 }
+              }
+              transition={
+                isAvatarFlipping
+                  ? { duration: 0.17, ease: "easeInOut" }
+                  : { duration: 3.2, repeat: Infinity, ease: "easeInOut" }
+              }
+              style={{ transformPerspective: 900, transformOrigin: "22% 50%" }}
+            />
+          ) : (
+            <motion.img
+              key="real"
+              src="/profile.png"
+              alt="Yifan real profile"
+              referrerPolicy="no-referrer"
+              className="absolute inset-[7%] w-[86%] h-[86%] rounded-full object-cover z-20"
+              initial={false}
+              animate={{ rotateY: avatarYRotation, opacity: 1, scale: 1 }}
+              transition={{ duration: 0.17, ease: "easeInOut" }}
+              style={{
+                objectPosition: "center 28%",
+                transformPerspective: 900,
+                transformOrigin: "22% 50%",
+              }}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Front ring: only bottom half, sits in front of the avatar */}
+        <div
+          className="absolute inset-0 rounded-full border-[6px] border-white dark:border-[#1a1a1a] pointer-events-none z-30"
+          style={{ clipPath: "inset(50% 0 0 0)" }}
+        />
+      </button>
 
       <div className="space-y-4">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">
@@ -605,25 +1276,37 @@ function HomeContent() {
 function WorkContent() {
   const work = [
     {
-      period: "2025 — Present",
-      role: "Independent Developer",
-      company: "Open Source Projects",
-      desc: "Built and maintained projects such as Lumina, myPortfolio, and utility-focused tools with emphasis on usability, fast iteration, and clean implementation.",
+      period: "Dec 2023 — Present",
+      role: "Research Assistant",
+      company: "University College London (UCL), London, UK",
+      desc: "Enhanced machine learning model performance through advanced algorithms, feature engineering, and hyperparameter optimization. Conducted targeted literature reviews to identify research gaps and shape follow-up study directions.",
     },
     {
-      period: "2023 — 2025",
-      role: "Frontend & Full-Stack Builder",
-      company: "Personal and Community Projects",
-      desc: "Delivered TypeScript and JavaScript apps, experimented with AI integrations, and improved developer workflows through automation and tooling.",
+      period: "May 2022 — Aug 2022",
+      role: "Research Assistant",
+      company: "GREE Air Conditioner, Ho Chi Minh City, Vietnam",
+      desc: "Built software prediction and evaluation functions using mathematical and statistical modeling. Designed low-level interaction logic to separate employee and customer workflows, implemented tested code under QA standards, and prepared system capability analysis data.",
     },
   ];
 
   const education = [
     {
-      period: "Academic + Self-Driven",
-      role: "Computer Science Foundation",
-      company: "Coursework and Independent Practice",
-      desc: "Strengthened fundamentals through university-style assignments and open-source practice, with ongoing focus on software engineering and product delivery.",
+      period: "Oct 2024",
+      role: "MSc, Artificial Intelligence for Sustainable Development",
+      company: "University College London, London, UK",
+      desc: "Graduated with Distinction. Thesis: Optimizing Post-Disaster Road Network Recovery via a novel data-mixing strategy in multi-generational deep neural networks. Coursework included Information Retrieval and Data Mining, Statistical NLP, Probabilistic Modelling, and Deep Representations and Learning.",
+    },
+    {
+      period: "Dec 2022",
+      role: "Honours Bachelor, Computer Science",
+      company: "University of Ottawa, Ottawa, Canada",
+      desc: "GPA 8.65/10. Merit Scholarship (2020, 2021) and Dean's Honour List (2020, 2021). Relevant coursework: Probability and Statistics for Engineers, Analysis and Design of User Interfaces, Advanced C++, Cryptography, Computer Graphics, and Programming Paradigms.",
+    },
+    {
+      period: "May 2019",
+      role: "Bachelor, Business Administration",
+      company: "University of Prince Edward Island, Charlottetown, Canada",
+      desc: "Concentration in Business Administration. Relevant coursework included Management Information Systems, Finite Mathematics, Marketing, and Calculus for Social and Life Sciences.",
     },
   ];
 
@@ -732,41 +1415,18 @@ function TechContent() {
   );
 }
 
-function BlogContent() {
-  const [selectedPost, setSelectedPost] = useState<number | null>(null);
+function BlogContent({ posts }: { posts: BlockItem[] }) {
+  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
-  const posts = [
-    {
-      title: "Building Lumina: AI-Powered Bookmark Search",
-      date: "Jan 18, 2026",
-      excerpt:
-        "How I approached turning messy browser bookmarks into a searchable knowledge base with AI summaries and tags.",
-      tags: ["AI", "Product"],
-      content:
-        "Lumina came from a simple pain point: bookmarks grow quickly, but finding what matters later is hard. I wanted a workflow where saved pages become useful context instead of clutter.\n\nI focused on three capabilities: concise summaries, meaningful tags, and semantic search. The project pushed me to think beyond basic keyword matching and design for intent-based retrieval.\n\nThe biggest lesson was product framing: users care less about the model and more about getting a useful answer fast.",
-    },
-    {
-      title: "Designing a Portfolio That Feels Like a Product",
-      date: "Dec 04, 2025",
-      excerpt:
-        "Notes on building this portfolio as a deliberate user experience, not just a static showcase page.",
-      tags: ["Frontend", "Design"],
-      content:
-        "I treated this portfolio like a product interface. The printer metaphor gave me a strong interaction model, but I still prioritized legibility and quick scanning for hiring contexts.\n\nMotion is used to guide attention during tab transitions and content reveals. I kept animation scoped so performance stays stable and interaction remains clear.\n\nThis process reinforced a recurring principle: memorable visual language works best when paired with predictable structure.",
-    },
-    {
-      title: "Small Tools, Real Utility: Side Project Strategy",
-      date: "Nov 09, 2025",
-      excerpt:
-        "Why I keep building focused utility projects and what they taught me about engineering trade-offs.",
-      tags: ["Engineering", "Learning"],
-      content:
-        "Not every project has to be huge. Focused tools like calculators, quality-of-life fixes, or workflow helpers are great environments to practice clear problem framing and shipping discipline.\n\nThese projects force practical decisions: what to automate, what to postpone, and how to keep scope under control while still delivering value.\n\nOver time, small wins compound into stronger engineering judgment and better product intuition.",
-    },
-  ];
+  useEffect(() => {
+    if (!selectedPostId) return;
+    const stillExists = posts.some((post) => post.id === selectedPostId);
+    if (!stillExists) setSelectedPostId(null);
+  }, [posts, selectedPostId]);
 
-  if (selectedPost !== null) {
-    const post = posts[selectedPost];
+  if (selectedPostId !== null) {
+    const post = posts.find((item) => item.id === selectedPostId);
+    if (!post) return null;
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -778,7 +1438,7 @@ function BlogContent() {
         {/* Top Navigation */}
         <div className="flex items-center justify-between mb-10">
           <button
-            onClick={() => setSelectedPost(null)}
+            onClick={() => setSelectedPostId(null)}
             className="group flex items-center gap-3 text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
           >
             <div className="w-8 h-8 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center group-hover:bg-zinc-100 dark:group-hover:bg-zinc-800 transition-colors">
@@ -864,14 +1524,20 @@ function BlogContent() {
         </p>
       </div>
 
+      {posts.length === 0 && (
+        <div className="rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 px-4 py-6 text-sm text-zinc-500 dark:text-zinc-400">
+          暂无内容。请通过 <span className="font-semibold">Blocks Admin</span> 新增你的第一条 block。
+        </div>
+      )}
+
       <div className="space-y-2">
         {posts.map((post, i) => (
           <motion.article
-            key={i}
+            key={post.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: i * 0.1 }}
-            onClick={() => setSelectedPost(i)}
+            onClick={() => setSelectedPostId(post.id)}
             className="group cursor-pointer py-6 border-b border-zinc-100 dark:border-zinc-800/50 last:border-0 relative"
           >
             {/* Hover background effect */}
@@ -957,40 +1623,68 @@ function CommContent() {
 function ProjectsContent() {
   const projects = [
     {
-      title: "myPortfolio",
-      description: "A printer/typewriter-inspired personal portfolio built with React, Vite, TypeScript, and Motion.",
-      image: "https://picsum.photos/seed/project1/600/400",
-      tags: ["React", "TypeScript", "Vite"],
-      link: "https://github.com/yifany-github/myPortfolio",
+      title: "intelli-spark-e-paper-board",
+      category: "Embedded AI Device / E-Paper System",
+      description:
+        "An e-paper smart board project for Raspberry Pi / Jetson that combines hardware input, voice interaction, and AI-driven task workflows.",
+      highlights: [
+        "Implements multi-screen e-paper UI navigation via rotary knob input.",
+        "Integrates voice capture, backend action routing, and Gemini-oriented automation flows.",
+      ],
+      image: "https://picsum.photos/seed/intelli-spark/600/400",
+      tags: ["E-Paper", "Raspberry Pi", "Voice + AI"],
+      link: "https://github.com/YongBoYu1/intelli-spark-e-paper-board",
+      cta: "View Repository",
     },
     {
-      title: "Lumina",
-      description: "Transforms bookmarks into an AI-assisted, searchable knowledge base with summaries and semantic retrieval.",
-      image: "https://picsum.photos/seed/project2/600/400",
-      tags: ["JavaScript", "AI", "Search"],
-      link: "https://github.com/yifany-github/Lumina",
+      title: "Lumina Web App",
+      category: "AI Well-Being / Conversational App",
+      description:
+        "A standalone Lumina web application focused on AI-powered emotional support, providing conversational guidance and a calmer, supportive interaction flow.",
+      highlights: [
+        "Delivers conversational emotional support through an AI chat interface.",
+        "Built as a deployable web app with modern React-based frontend architecture.",
+      ],
+      image: "https://picsum.photos/seed/lumina-web/600/400",
+      tags: ["AI Assistant", "Well-Being", "React"],
+      link: "https://lumina-743776522409.us-west1.run.app/",
+      cta: "Open Web App",
     },
     {
-      title: "intelliSpark_ui",
-      description: "TypeScript-based UI project focused on structured frontend architecture and maintainable component patterns.",
-      image: "https://picsum.photos/seed/project3/600/400",
-      tags: ["TypeScript", "React", "UI"],
-      link: "https://github.com/yifany-github/intelliSpark_ui",
+      title: "Lumina - AI Bookmark Manager (Chrome Extension)",
+      category: "Browser Productivity + AI Knowledge Tool",
+      description:
+        "A Chrome extension that turns bookmark collections into a structured, searchable knowledge base using AI summarization and semantic retrieval.",
+      highlights: [
+        "Automatically generates bookmark summaries and meaningful tags via Gemini.",
+        "Enables semantic search so users can find content by intent, not exact keywords.",
+      ],
+      image: "https://picsum.photos/seed/lumina-extension/600/400",
+      tags: ["Chrome Extension", "Gemini", "Semantic Search"],
+      link: "https://chromewebstore.google.com/detail/lumina-ai-bookmark-manage/eblpcbphkelmifdmjbhcdkhijjnfojbe",
+      cta: "Open Chrome Web Store",
     },
     {
-      title: "sichuan-mahjong-scorer",
-      description: "A polished Mahjong score calculator with GUI and persistent records, built for practical gameplay use.",
-      image: "https://picsum.photos/seed/project4/600/400",
-      tags: ["Python", "Desktop Tool", "GUI"],
-      link: "https://github.com/yifany-github/sichuan-mahjong-scorer",
+      title: "YY Chat",
+      category: "Real-Time Communication Platform",
+      description:
+        "A chat-focused web platform for real-time communication between users and communities, designed around fast interaction and continuous presence.",
+      highlights: [
+        "Supports instant chat workflows and always-on conversation sessions.",
+        "Focuses on smooth social messaging UX across desktop and mobile browser contexts.",
+      ],
+      image: "https://picsum.photos/seed/yychat/600/400",
+      tags: ["Chat", "Realtime", "Web App"],
+      link: "https://yychat.ai",
+      cta: "Visit Website",
     },
   ];
 
   return (
     <div className="relative space-y-8 animate-in fade-in duration-700">
       <p className="text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed max-w-xl">
-        Selected projects that represent my approach to frontend engineering and
-        product experience.
+        Recent projects in chronological order (latest to earliest), covering
+        communication platforms, AI productivity tools, and embedded AI systems.
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
@@ -1009,12 +1703,23 @@ function ProjectsContent() {
               <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300"></div>
             </div>
             <div className="p-5 flex flex-col flex-1">
+              <p className="text-[11px] font-mono uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">
+                {project.category}
+              </p>
               <h3 className="text-xl font-display font-bold text-zinc-900 dark:text-white mb-2 group-hover:text-blue-500 transition-colors">
                 {project.title}
               </h3>
-              <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-4 flex-1">
+              <p className="text-zinc-600 dark:text-zinc-400 text-sm mb-3">
                 {project.description}
               </p>
+              <ul className="space-y-1.5 mb-4 text-xs text-zinc-600 dark:text-zinc-400">
+                {project.highlights.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-zinc-400 dark:bg-zinc-500 shrink-0"></span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
               <div className="flex flex-wrap gap-2 mt-auto">
                 {project.tags.map((tag) => (
                   <span
@@ -1031,7 +1736,7 @@ function ProjectsContent() {
                 rel="noreferrer"
                 className="mt-4 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
               >
-                View Repo <ArrowRight size={14} />
+                {project.cta} <ArrowRight size={14} />
               </a>
             </div>
           </div>
