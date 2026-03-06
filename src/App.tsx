@@ -551,13 +551,14 @@ function HomeContent() {
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">
           Hi, I'm Yifan. <br />
           <span className="text-zinc-400 dark:text-zinc-500">
-            I build modern web products.
+            I build practical web and AI-assisted tools.
           </span>
         </h2>
 
         <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xl">
-          Frontend-focused developer creating interactive and polished user
-          interfaces with React, TypeScript, motion, and thoughtful UX.
+          Developer focused on product-minded engineering. I enjoy building
+          useful software, from polished UI projects to small tools that solve
+          specific real-world problems.
         </p>
       </div>
 
@@ -565,7 +566,7 @@ function HomeContent() {
         <div className="inline-flex items-center gap-3 bg-zinc-100 dark:bg-zinc-800/50 px-4 py-2 rounded-full border border-black/5 dark:border-white/5">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
           <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            Open to collaboration
+            Open to collaboration and new opportunities
           </span>
         </div>
       </div>
@@ -578,23 +579,23 @@ function WorkContent() {
     {
       period: "2025 — Present",
       role: "Independent Developer",
-      company: "Personal Portfolio & Web Projects",
-      desc: "Designing and shipping portfolio websites and frontend demos with a strong focus on UI detail, animation, and maintainable code.",
+      company: "Open Source Projects",
+      desc: "Built and maintained projects such as Lumina, myPortfolio, and utility-focused tools with emphasis on usability, fast iteration, and clean implementation.",
     },
     {
       period: "2023 — 2025",
-      role: "Frontend Builder",
-      company: "Freelance & Open Source",
-      desc: "Built responsive interfaces, reusable components, and performance-oriented web experiences across React-based projects.",
+      role: "Frontend & Full-Stack Builder",
+      company: "Personal and Community Projects",
+      desc: "Delivered TypeScript and JavaScript apps, experimented with AI integrations, and improved developer workflows through automation and tooling.",
     },
   ];
 
   const education = [
     {
-      period: "Ongoing",
-      role: "Continuous Learning",
-      company: "Frontend Engineering & Product Design",
-      desc: "Deepening expertise in TypeScript, system design, and interaction design through real projects and iterative practice.",
+      period: "Academic + Self-Driven",
+      role: "Computer Science Foundation",
+      company: "Coursework and Independent Practice",
+      desc: "Strengthened fundamentals through university-style assignments and open-source practice, with ongoing focus on software engineering and product delivery.",
     },
   ];
 
@@ -670,20 +671,23 @@ function TechContent() {
     "React",
     "Next.js",
     "TypeScript",
+    "JavaScript",
+    "Python",
     "Vite",
     "Tailwind CSS",
     "Motion",
     "Node.js",
+    "SQLite",
     "GitHub Actions",
-    "Figma",
-    "UI/UX",
+    "Chrome Extensions",
+    "AI API Integration",
   ];
 
   return (
     <div className="relative space-y-8 animate-in fade-in duration-700">
       <p className="text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed max-w-xl">
-        Core technologies I use to build fast, maintainable, and user-centered
-        web interfaces.
+        Technologies I use across frontend-heavy products and utility tools,
+        balancing developer speed with maintainability.
       </p>
 
       <div className="flex flex-wrap gap-3">
@@ -705,31 +709,31 @@ function BlogContent() {
 
   const posts = [
     {
-      title: "How I Designed This Typewriter Portfolio",
+      title: "Building Lumina: AI-Powered Bookmark Search",
       date: "Jan 18, 2026",
       excerpt:
-        "A breakdown of the visual direction, layout decisions, and interaction patterns behind this portfolio.",
-      tags: ["Design", "UI/UX"],
+        "How I approached turning messy browser bookmarks into a searchable knowledge base with AI summaries and tags.",
+      tags: ["AI", "Product"],
       content:
-        "This portfolio started from a simple question: how can a personal site feel memorable without becoming hard to use? I chose a printer/typewriter metaphor to make navigation feel tactile and deliberate.\n\nThe interface uses one primary interaction model: switch tabs and let a new sheet 'print' into place. That keeps the experience consistent while still playful.\n\nKey principles I followed:\n1. Keep hierarchy obvious at every screen size.\n2. Use motion to communicate state changes, not decoration.\n3. Build reusable layout and card patterns first, then style.",
+        "Lumina came from a simple pain point: bookmarks grow quickly, but finding what matters later is hard. I wanted a workflow where saved pages become useful context instead of clutter.\n\nI focused on three capabilities: concise summaries, meaningful tags, and semantic search. The project pushed me to think beyond basic keyword matching and design for intent-based retrieval.\n\nThe biggest lesson was product framing: users care less about the model and more about getting a useful answer fast.",
     },
     {
-      title: "Motion Patterns I Reuse in React Projects",
+      title: "Designing a Portfolio That Feels Like a Product",
       date: "Dec 04, 2025",
       excerpt:
-        "My practical approach to transitions, springs, and layout animations that improve UX without hurting performance.",
-      tags: ["React", "Animation"],
+        "Notes on building this portfolio as a deliberate user experience, not just a static showcase page.",
+      tags: ["Frontend", "Design"],
       content:
-        "I try to keep animations lightweight and predictable. Instead of animating everything, I focus on transitions that clarify user intent, such as section switches, hover feedback, and content reveals.\n\nIn React, I rely on spring-based transitions for most UI movements because they feel natural under interruption. I also keep durations short and avoid large full-page effects on low-power devices.\n\nA simple rule: if animation does not improve orientation, feedback, or hierarchy, remove it.",
+        "I treated this portfolio like a product interface. The printer metaphor gave me a strong interaction model, but I still prioritized legibility and quick scanning for hiring contexts.\n\nMotion is used to guide attention during tab transitions and content reveals. I kept animation scoped so performance stays stable and interaction remains clear.\n\nThis process reinforced a recurring principle: memorable visual language works best when paired with predictable structure.",
     },
     {
-      title: "Writing Better Project Case Studies",
+      title: "Small Tools, Real Utility: Side Project Strategy",
       date: "Nov 09, 2025",
       excerpt:
-        "How I structure portfolio project write-ups so recruiters and collaborators can quickly understand impact.",
-      tags: ["Portfolio", "Career"],
+        "Why I keep building focused utility projects and what they taught me about engineering trade-offs.",
+      tags: ["Engineering", "Learning"],
       content:
-        "A good case study should be scannable in less than a minute. I structure each one with context, goals, constraints, process, and measurable outcomes.\n\nI avoid vague claims like 'improved UX' and replace them with concrete evidence: reduced bounce rate, faster task completion, clearer information architecture, or lower maintenance cost.\n\nThe best portfolio writing is concise and specific. It helps people understand how you think, not just what you built.",
+        "Not every project has to be huge. Focused tools like calculators, quality-of-life fixes, or workflow helpers are great environments to practice clear problem framing and shipping discipline.\n\nThese projects force practical decisions: what to automate, what to postpone, and how to keep scope under control while still delivering value.\n\nOver time, small wins compound into stronger engineering judgment and better product intuition.",
     },
   ];
 
@@ -888,33 +892,35 @@ function CommContent() {
   return (
     <div className="relative space-y-8 animate-in fade-in duration-700">
       <p className="text-zinc-600 dark:text-zinc-400 text-lg max-w-xl">
-        If you want to collaborate on a product, website, or frontend rebuild,
-        feel free to send a message.
+        Best way to reach me is through GitHub. I am open to discussions around
+        frontend engineering, product UX, and practical AI applications.
       </p>
 
-      <div className="space-y-5 max-w-xl">
-        <div>
-          <label className="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">
-            Email Address
-          </label>
-          <input
-            type="email"
-            className="w-full bg-zinc-50 dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-zinc-900 dark:text-white"
-            placeholder="yifan@example.com"
-          />
+      <div className="space-y-4 max-w-xl">
+        <div className="p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-zinc-50 dark:bg-zinc-900/40">
+          <p className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
+            GitHub
+          </p>
+          <a
+            href="https://github.com/yifany-github"
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm sm:text-base font-medium text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            github.com/yifany-github
+          </a>
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">
-            Message
-          </label>
-          <textarea
-            className="w-full bg-zinc-50 dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none h-32 text-zinc-900 dark:text-white"
-            placeholder="Tell me about your project..."
-          ></textarea>
+        <div className="p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-zinc-50 dark:bg-zinc-900/40">
+          <p className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
+            Email
+          </p>
+          <a
+            href="mailto:71915211+yifany-github@users.noreply.github.com"
+            className="text-sm sm:text-base font-medium text-blue-600 dark:text-blue-400 hover:underline break-all"
+          >
+            71915211+yifany-github@users.noreply.github.com
+          </a>
         </div>
-        <button className="w-full py-3.5 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-xl text-sm font-bold tracking-wide hover:bg-zinc-800 dark:hover:bg-zinc-100 active:scale-[0.98] transition-all">
-          Send Message
-        </button>
       </div>
     </div>
   );
@@ -930,25 +936,25 @@ function ProjectsContent() {
       link: "https://github.com/yifany-github/myPortfolio",
     },
     {
-      title: "UI Motion Playground",
-      description: "A collection of reusable micro-interactions and layout transitions for modern web interfaces.",
+      title: "Lumina",
+      description: "Transforms bookmarks into an AI-assisted, searchable knowledge base with summaries and semantic retrieval.",
       image: "https://picsum.photos/seed/project2/600/400",
-      tags: ["Motion", "React", "Tailwind"],
-      link: "#",
+      tags: ["JavaScript", "AI", "Search"],
+      link: "https://github.com/yifany-github/Lumina",
     },
     {
-      title: "Component Starter Kit",
-      description: "A small component library with accessible primitives and consistent visual patterns.",
+      title: "intelliSpark_ui",
+      description: "TypeScript-based UI project focused on structured frontend architecture and maintainable component patterns.",
       image: "https://picsum.photos/seed/project3/600/400",
-      tags: ["TypeScript", "Design System"],
-      link: "#",
+      tags: ["TypeScript", "React", "UI"],
+      link: "https://github.com/yifany-github/intelliSpark_ui",
     },
     {
-      title: "Frontend Case Study Notes",
-      description: "A writing-focused project for documenting frontend decisions, trade-offs, and outcomes.",
+      title: "sichuan-mahjong-scorer",
+      description: "A polished Mahjong score calculator with GUI and persistent records, built for practical gameplay use.",
       image: "https://picsum.photos/seed/project4/600/400",
-      tags: ["Portfolio", "Documentation"],
-      link: "#",
+      tags: ["Python", "Desktop Tool", "GUI"],
+      link: "https://github.com/yifany-github/sichuan-mahjong-scorer",
     },
   ];
 
@@ -963,7 +969,7 @@ function ProjectsContent() {
         {projects.map((project, i) => (
           <div
             key={i}
-            className="group flex flex-col border border-black/10 dark:border-white/10 rounded-2xl overflow-hidden bg-white dark:bg-[#1a1a1a] shadow-sm hover:shadow-md transition-all cursor-pointer"
+            className="group flex flex-col border border-black/10 dark:border-white/10 rounded-2xl overflow-hidden bg-white dark:bg-[#1a1a1a] shadow-sm hover:shadow-md transition-all"
           >
             <div className="h-40 sm:h-48 overflow-hidden relative">
               <img
@@ -991,6 +997,14 @@ function ProjectsContent() {
                   </span>
                 ))}
               </div>
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-4 inline-flex w-fit items-center gap-1.5 text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                View Repo <ArrowRight size={14} />
+              </a>
             </div>
           </div>
         ))}
