@@ -900,6 +900,13 @@ export default function App() {
             className="top-24 left-[9%] hidden md:block"
             constraintsRef={constraintsRef}
           />
+          <ImageIconSticker
+            src="/tzuyu.png"
+            size={96}
+            rotate={-7}
+            className="top-[17rem] left-[18%] hidden md:block"
+            constraintsRef={constraintsRef}
+          />
           <ShinChanSticker
             className="top-32 right-[16%]"
             constraintsRef={constraintsRef}
